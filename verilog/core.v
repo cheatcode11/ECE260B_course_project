@@ -5,14 +5,14 @@ module core (clk, sum_out, mem_in, out, inst, reset);
 parameter col = 8;
 parameter bw = 8;
 parameter bw_psum = 2*bw+4;
-parameter pr = 16;
+parameter pr = 8;
 
 output [bw_psum+3:0] sum_out;
 output [bw_psum*col-1:0] out;
 wire   [bw_psum*col-1:0] pmem_out;
 input  [pr*bw-1:0] mem_in;
 input  clk;
-input  [16:0] inst; 
+input  [18:0] inst; // Ajay 
 input  reset;
 
 wire  [pr*bw-1:0] mac_in;
@@ -24,8 +24,8 @@ wire  [bw_psum*col-1:0] sfp_out;
 wire  [bw_psum*col-1:0] array_out;
 wire  [col-1:0] fifo_wr;
 wire  ofifo_rd;
-wire [3:0] qkmem_add;
-wire [3:0] pmem_add;
+wire [2:0] qkmem_add;
+wire [2:0] pmem_add;
 
 wire  qmem_rd;
 wire  qmem_wr; 
@@ -50,7 +50,17 @@ assign pmem_in = fifo_out;
 
 
 //assign out=pmem_in;////Tanish
-assign out=pmem_out;////Tanish
+//assign out=pmem_out;////Tanish
+
+wire [bw_psum*col-1:0] to_normalize;  // Ajay
+wire [bw_psum*col-1:0] normalized_out; // Ajay
+assign to_normalize = pmem_out;   // Ajay
+assign out = normalized_out;
+wire div = inst[17]; // Ajay
+wire acc = inst[18]; // Ajay
+wire fifo_ext_rd = 1'b0;   // Ajay
+wire sum_in[24:0];   // Ajay
+wire [23:0] sum_to_other_core; // Ajay
 
 mac_array #(.bw(bw), .bw_psum(bw_psum), .col(col), .pr(pr)) mac_array_instance (
         .in(mac_in), 
@@ -95,12 +105,21 @@ sram_w16 #(.sram_bit(col*bw_psum)) psum_mem_instance (
         .D(pmem_in),
         .Q(pmem_out),
         .CEN(!(pmem_rd||pmem_wr)),
-        .WEN(!pmem_wr), //Mingu
+        .WEN(!pmem_wr), //Mingu Kang
         //.WEN(pmem_wr), //Tanish
         .A(pmem_add)
 );
 
-
+sfp_row #(.bw(bw), .bw_psum(bw_psum), .col(col)) sfp_instance(
+	.clk(clk),
+	.div(div),
+	.acc(acc), 
+	.fifo_ext_rd(fifo_ext_rd),   // 1'b0
+	.sum_in(24'b1),   // 24'b0
+	.sfp_in(to_normalize),
+	.sfp_out(normalized_out),
+	.sum_out(sum_to_other_core)	
+);
 
   //////////// For printing purpose ////////////
   always @(posedge clk) begin

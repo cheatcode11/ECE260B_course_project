@@ -43,7 +43,7 @@ reg ofifo_rd = 0;
 
 wire [bw_psum*col-1:0] out;//My additon
 
-wire [16:0] inst; 
+wire [18:0] inst;   // Ajay 
 reg qmem_rd = 0;
 reg qmem_wr = 0; 
 reg kmem_rd = 0; 
@@ -52,10 +52,14 @@ reg pmem_rd = 0;
 reg pmem_wr = 0; 
 reg execute = 0;
 reg load = 0;
-reg [3:0] qkmem_add = 0;
-reg [3:0] pmem_add = 0;
+reg [2:0] qkmem_add = 0;//was 3:0
+reg [2:0] pmem_add = 0;//was 3:0
 
 
+reg acc = 0;  // Ajay
+reg div = 0;  // Ajay
+assign inst[17] = div; // Ajay
+assign inst[18] = acc; // Ajay
 assign inst[16] = ofifo_rd;
 assign inst[15:12] = qkmem_add;
 assign inst[11:8]  = pmem_add;
@@ -257,6 +261,7 @@ $display("##### Qmem writing  #####");
     mem_in[6*bw-1:5*bw] = Q[q][5];
     mem_in[7*bw-1:6*bw] = Q[q][6];
     mem_in[8*bw-1:7*bw] = Q[q][7];
+    /*
     mem_in[9*bw-1:8*bw] = Q[q][8];
     mem_in[10*bw-1:9*bw] = Q[q][9];
     mem_in[11*bw-1:10*bw] = Q[q][10];
@@ -265,6 +270,7 @@ $display("##### Qmem writing  #####");
     mem_in[14*bw-1:13*bw] = Q[q][13];
     mem_in[15*bw-1:14*bw] = Q[q][14];
     mem_in[16*bw-1:15*bw] = Q[q][15];
+    */
 
     #0.5 clk = 1'b1;  
 
@@ -298,6 +304,7 @@ $display("##### Kmem writing #####");
     mem_in[6*bw-1:5*bw] = K[q][5];
     mem_in[7*bw-1:6*bw] = K[q][6];
     mem_in[8*bw-1:7*bw] = K[q][7];
+    /*
     mem_in[9*bw-1:8*bw] = K[q][8];
     mem_in[10*bw-1:9*bw] = K[q][9];
     mem_in[11*bw-1:10*bw] = K[q][10];
@@ -306,6 +313,7 @@ $display("##### Kmem writing #####");
     mem_in[14*bw-1:13*bw] = K[q][13];
     mem_in[15*bw-1:14*bw] = K[q][14];
     mem_in[16*bw-1:15*bw] = K[q][15];
+    */
 
     #0.5 clk = 1'b1;  
 
@@ -393,7 +401,7 @@ $display("##### execute #####");
 ////////////// output fifo rd and wb to psum mem ///////////////////
 
 $display("##### move ofifo to pmem #####");
-
+//Begin writing into pmem
   for (q=0; q<total_cycle; q=q+1) begin
     #0.5 clk = 1'b0;  
     ofifo_rd = 1; 
@@ -401,23 +409,85 @@ $display("##### move ofifo to pmem #####");
 
     if (q>0) begin
        pmem_add = pmem_add + 1;
-          if (out == temp16b_tbtest[q]) // this if condition is needed as the output is available at the next cycle
-          $display("Computed data matched :D, %40h vs.  %40h",   out, temp16b_tbtest[q]);
-       else begin
-          $display("Computed data ERROR (>.<),  %40h vs.  %40h",  out, temp16b_tbtest[q]);
-          error = error+1;
-       end
-       $display("Total ERROR: %3d",  error);
     end
+         #0.5 clk = 1'b1;
+         
 
-    #0.5 clk = 1'b1;
-    
+   end//End of writing
+        //#0.5 clk = 1'b0;  
+     pmem_wr = 0; pmem_add = 0; ofifo_rd = 0;
+     //#0.5 clk = 1'b1;
      
-  end
+     //#0.5 clk = 1'b0;
+    // #0.5 clk = 1'b1;
+   
+   //Begin reading from pmem
+  /*
+  for (q=0; q<total_cycle+1; q=q+1) begin
+    #0.5 clk = 1'b0;  
+    //ofifo_rd = 1; 
+    pmem_rd = 1; 
 
-  #0.5 clk = 1'b0;  
-  pmem_wr = 0; pmem_add = 0; ofifo_rd = 0;
-  #0.5 clk = 1'b1;  
+    if (q>0) begin
+       pmem_add = pmem_add + 1;
+       end
+    
+    if (q>0) begin
+    if (out == temp16b_tbtest[q-1]) // this if condition is needed as the output is available at the next cycle
+          $display("Computed data matched :D, %40h vs.  %40h",   out, temp16b_tbtest[q-1]);
+    else begin
+          $display("Computed data ERROR (>.<),  %40h vs.  %40h",  out, temp16b_tbtest[q-1]);
+          error = error+1;
+    end
+    $display("Total ERROR: %3d",  error);
+    end
+         #0.5 clk = 1'b1;
+        
+  
+   end//End of reading
+   */
+
+
+	
+  for (q=0; q<total_cycle+1; q=q+1) begin
+    #0.5 clk = 1'b0; 
+    pmem_wr = 0;
+    pmem_rd = 1; 
+    
+    if (q>0) begin
+        pmem_add = pmem_add + 1;
+	// First compute the sum
+	div = 0;
+	acc = 1;
+	#0.5 clk = 1'b1;
+	#0.5 clk = 1'b0;
+	// Need to wait for a cycle. This is how sfp is designed.
+	pmem_rd = 0;
+	acc = 0;
+	#0.5 clk = 1'b1;
+	#0.5 clk = 1'b0;
+	// The compute the division
+	div = 1;
+	#0.5 clk = 1'b1;
+	#0.5 clk = 1'b0;
+	div = 0;
+       	$display("Normalized output : %40h",   out);
+    end
+         #0.5 clk = 1'b1;
+        
+  
+   end//End of reading
+
+        #0.5 clk = 1'b0;
+	acc = 0;
+	div = 0;
+     	pmem_rd = 0; pmem_add = 0; div=0;
+     	#0.5 clk = 1'b1;
+	
+	
+
+//end
+  
 
 ///////////////////////////////////////////
 

@@ -5,11 +5,11 @@ module fullchip (clk, mem_in, inst, reset,out);
 parameter col = 8;
 parameter bw = 8;
 parameter bw_psum = 2*bw+4;
-parameter pr = 16;
+parameter pr = 8;//was 16
 
 input  clk; 
 input  [pr*bw-1:0] mem_in; 
-input  [16:0] inst; 
+input  [18:0] inst;   // Ajay
 input  reset;
 
 //My addition
