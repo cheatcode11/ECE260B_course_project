@@ -1,0 +1,3 @@
+./mac_col_gated_tb.v
+./mac_col_gated.v
+./mac_8in_gated.v
