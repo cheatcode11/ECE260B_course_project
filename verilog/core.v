@@ -12,7 +12,8 @@ output [bw_psum*col-1:0] out;
 wire   [bw_psum*col-1:0] pmem_out;
 input  [pr*bw-1:0] mem_in;
 input  clk;
-input  [18:0] inst; // Ajay 
+// Ajay: Bitwidth of inst increase by two to control sfp
+input  [19:0] inst; 
 input  reset;
 
 wire  [pr*bw-1:0] mac_in;
@@ -20,6 +21,7 @@ wire  [pr*bw-1:0] kmem_out;
 wire  [pr*bw-1:0] qmem_out;
 wire  [bw_psum*col-1:0] pmem_in;
 wire  [bw_psum*col-1:0] fifo_out;
+// Output of SFP
 wire  [bw_psum*col-1:0] sfp_out;
 wire  [bw_psum*col-1:0] array_out;
 wire  [col-1:0] fifo_wr;
@@ -46,21 +48,24 @@ assign pmem_rd = inst[1];
 assign pmem_wr = inst[0];
 
 assign mac_in  = inst[6] ? kmem_out : qmem_out;
-assign pmem_in = fifo_out;
+assign pmem_in = (sfp_pmem_wr) ? normalized_out : fifo_out;
 
 
-//assign out=pmem_in;////Tanish
-//assign out=pmem_out;////Tanish
 
-wire [bw_psum*col-1:0] to_normalize;  // Ajay
-wire [bw_psum*col-1:0] normalized_out; // Ajay
-assign to_normalize = pmem_out;   // Ajay
-assign out = normalized_out;
-wire div = inst[17]; // Ajay
-wire acc = inst[18]; // Ajay
-wire fifo_ext_rd = 1'b0;   // Ajay
-wire sum_in[24:0];   // Ajay
-wire [23:0] sum_to_other_core; // Ajay
+// -----   SFP params -------
+// Input of SFP
+wire [bw_psum*col-1:0] to_normalize;
+// Output of SFP
+wire [bw_psum*col-1:0] normalized_out;
+assign to_normalize = pmem_out;
+assign out = pmem_out;
+wire div = inst[17]; 
+wire acc = inst[18];
+wire sfp_pmem_wr = inst[19];
+wire fifo_ext_rd = 1'b0;
+wire sum_in[24:0];
+wire [23:0] sum_to_other_core; 
+
 
 mac_array #(.bw(bw), .bw_psum(bw_psum), .col(col), .pr(pr)) mac_array_instance (
         .in(mac_in), 
@@ -123,9 +128,8 @@ sfp_row #(.bw(bw), .bw_psum(bw_psum), .col(col)) sfp_instance(
 
   //////////// For printing purpose ////////////
   always @(posedge clk) begin
-      if(pmem_wr)
-         $display("Memory write to PSUM mem add %x %x ", pmem_add, pmem_in); 
-         //$display("Memory obtained from PSUM mem add %x %x ", pmem_add, pmem_out); 
+      //if(pmem_wr)
+         //$display("Memory write to PSUM mem add %x %x ", pmem_add, pmem_in); 
   end
 
 

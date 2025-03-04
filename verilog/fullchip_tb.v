@@ -25,9 +25,14 @@ integer  weight [col*pr-1:0];
 integer  K[col-1:0][pr-1:0];
 integer  Q[total_cycle-1:0][pr-1:0];
 integer  result[total_cycle-1:0][col-1:0];
+real expected_norm_result[total_cycle-1:0][col-1:0];
+reg signed [bw_psum-1:0] temp_result;
 integer  result_fn[total_cycle-1:0][col-1:0];//Tanish
-//integer  temp16b_tbtest[total_cycle:0];//for finding errors in testbench-Tanish
-reg  [bw_psum*col:0] temp16b_tbtest[total_cycle:0];//for finding errors in testbench-Tanish
+reg  [bw_psum*col-1:0] temp16b_tbtest[total_cycle:0];//for finding errors in testbench-Tanish
+
+// Expected outputs after normalization
+reg [bw_psum*col-1:0] expected_norm_output[total_cycle:0];
+
 integer  sum[total_cycle-1:0];
 
 integer i,j,k,t,p,q,s,u,m,r;
@@ -43,7 +48,9 @@ reg ofifo_rd = 0;
 
 wire [bw_psum*col-1:0] out;//My additon
 
-wire [18:0] inst;   // Ajay 
+reg [bw_psum-1:0] sfp_out;
+// Ajay: Increased inst bitwidth for sfp control signals
+wire [19:0] inst;
 reg qmem_rd = 0;
 reg qmem_wr = 0; 
 reg kmem_rd = 0; 
@@ -56,10 +63,12 @@ reg [2:0] qkmem_add = 0;//was 3:0
 reg [2:0] pmem_add = 0;//was 3:0
 
 
-reg acc = 0;  // Ajay
-reg div = 0;  // Ajay
-assign inst[17] = div; // Ajay
-assign inst[18] = acc; // Ajay
+reg acc = 0;// SFP
+reg div = 0;// SFP
+reg sfp_pmem_wr = 0; // SFP
+assign inst[19] = sfp_pmem_wr;
+assign inst[17] = div; // SFP
+assign inst[18] = acc; // SFP
 assign inst[16] = ofifo_rd;
 assign inst[15:12] = qkmem_add;
 assign inst[11:8]  = pmem_add;
@@ -74,12 +83,18 @@ assign inst[0] = pmem_wr;
 
 
 
-reg [bw_psum-1:0] temp5b;
-reg [bw_psum+3:0] temp_sum;
-reg [bw_psum*col-1:0] temp16b;
+reg signed [bw_psum-1:0] temp5b;
+reg signed [bw_psum-1:0] norm_reg_result;
+reg signed [bw_psum-1:0] temp5b_norm;
+real temp_sum;
+real sfp_out_real;
+reg signed [bw_psum*col-1:0] temp16b;
+reg signed [bw_psum*col-1:0] temp16b_norm;
 
 
-
+reg [bw_psum+3:0] sum_in = 1;
+reg [bw_psum+3:0] sum_this_core;
+reg signed [bw_psum-1:0] sum_2core;
 
 fullchip #(.bw(bw), .bw_psum(bw_psum), .col(col), .pr(pr)) fullchip_instance (
       .reset(reset),
@@ -115,7 +130,7 @@ $display("##### Q data txt reading #####");
     for (j=0; j<pr; j=j+1) begin
           qk_scan_file = $fscanf(qk_file, "%d\n", captured_data);
           Q[q][j] = captured_data;
-          $display("%d\n", Q [q][j]);
+          //$display("%d\n", Q [q][j]);
     end
   end
 /////////////////////////////////
@@ -141,7 +156,7 @@ $display("##### K data txt reading #####");
   end
   reset = 0;
 
-  qk_file = $fopen("kdata.txt", "r");
+  qk_file = $fopen("kdata_core0.txt", "r");
 
   //// To get rid of first 4 lines in data file ////
   qk_scan_file = $fscanf(qk_file, "%s\n", captured_data);
@@ -156,7 +171,6 @@ $display("##### K data txt reading #####");
     for (j=0; j<pr; j=j+1) begin
           qk_scan_file = $fscanf(qk_file, "%d\n", captured_data);
           K[q][j] = captured_data;
-          $display("##### %d\n", K[q][j]);
     end
   end
 /////////////////////////////////
@@ -171,11 +185,12 @@ $display("##### K data txt reading #####");
 /////////////// Estimated result printing /////////////////
 
 
-$display("##### Estimated multiplication result #####");
+$display("##### Computing Estimated results #####");
 
 for (t=0; t<total_cycle; t=t+1) begin
      
        temp16b_tbtest[t]= 0;
+       expected_norm_output[t] = 0;
      
   end
   for (t=0; t<total_cycle; t=t+1) begin
@@ -185,66 +200,35 @@ for (t=0; t<total_cycle; t=t+1) begin
   end
 
   for (t=0; t<total_cycle; t=t+1) begin
+	  temp_sum = 0;
      for (q=0; q<col; q=q+1) begin
          for (k=0; k<pr; k=k+1) begin
             result[t][q] = result[t][q] + Q[t][k] * K[q][k];
          end
 
          temp5b = result[t][q];
+	 // Update sum
+	 temp_sum = temp_sum + ((result[t][q] < 0) ? (-1 * result[t][q]) : (result[t][q]));
          temp16b = {temp16b[139:0], temp5b};
      end
 
-     //$display("%d %d %d %d %d %d %d %d", result[t][0], result[t][1], result[t][2], result[t][3], result[t][4], result[t][5], result[t][6], result[t][7]);
-     $display("prd @cycle%2d: %40h", t, temp16b);
      temp16b_tbtest[t] =temp16b;
-     //$display("integer tb element display prd @cycle%2d: %40h", t, temp16b_tbtest[t]);
+	// Normalized values
+	for(q = 0; q < col; q = q+1) begin
+		temp_result = result[t][q];
+		sum_this_core = temp_sum;
+		// Ajay: currently hardcoded to 10. Change when 2 core is
+		// implemented
+		sum_2core = 10;
+		temp5b_norm = temp_result / sum_2core;
+		temp16b_norm = {temp16b_norm[139:0], temp5b_norm};
+	end
+	//$display("");
+	//$display("norm prd @cycle%2d: %40h", t, temp16b_norm);
+	expected_norm_output[t] = temp16b_norm;
   end
-
-//////////////////////////////////////////////
-/*
-function [bw_psum*col-1:0] psum_predicted;
-  input integer cycle_number_t; // Input parameter for the cycle number
-  integer q, k;
-  reg [bw_psum*col-1:0] psum_temp; // Temporary register for storing partial sums
-  begin
-    psum_temp = 0; // Initialize the temporary register
-    for (q = 0; q < col; q = q + 1) begin
-      for (k = 0; k < pr; k = k + 1) begin
-        psum_temp[q*bw_psum +: bw_psum] = psum_temp[q*bw_psum +: bw_psum] + Q[cycle_number_t][k] * K[q][k];
-      end
-    end
-    psum_predicted = psum_temp; // Assign the result to the function output
-  end
-endfunction
-
-task psum_predicted;
-  input integer cycle_number_t; // Input parameter for the cycle number
-  output [bw_psum*col-1:0] psum_temp; // Output must not be `reg` inside a task
-
-  integer q, k; // Loop variables
-  reg [bw_psum-1:0] temp_psum; // Temporary register for calculations
-
-  begin
-    psum_temp = 0; // Initialize output
-    for (q = 0; q < col; q = q + 1) begin
-      temp_psum = 0; // Reset temporary sum for each column
-      for (k = 0; k < pr; k = k + 1) begin
-        temp_psum = temp_psum + Q[cycle_number_t][k] * K[q][k];
-      end
-      psum_temp[q*bw_psum +: bw_psum] = temp_psum; // Assign final sum to output
-    end
-  end
-endtask
-*/
-
-
- 
-
-
-
-
-
 ///// Qmem writing  /////
+$display("Done computing estimated results");
 
 $display("##### Qmem writing  #####");
 
@@ -283,7 +267,7 @@ $display("##### Qmem writing  #####");
   #0.5 clk = 1'b1;  
 ///////////////////////////////////////////
 
-
+$display("Done writing to Qmem");
 
 
 
@@ -333,7 +317,7 @@ $display("##### Kmem writing #####");
   end
 
 
-
+$display("##### Done writing to Kmem #######");
 
 /////  K data loading  /////
 $display("##### K data loading to processor #####");
@@ -411,51 +395,14 @@ $display("##### move ofifo to pmem #####");
        pmem_add = pmem_add + 1;
     end
          #0.5 clk = 1'b1;
-         
-
    end//End of writing
-        //#0.5 clk = 1'b0;  
      pmem_wr = 0; pmem_add = 0; ofifo_rd = 0;
-     //#0.5 clk = 1'b1;
-     
-     //#0.5 clk = 1'b0;
-    // #0.5 clk = 1'b1;
-   
-   //Begin reading from pmem
-  /*
-  for (q=0; q<total_cycle+1; q=q+1) begin
-    #0.5 clk = 1'b0;  
-    //ofifo_rd = 1; 
-    pmem_rd = 1; 
-
-    if (q>0) begin
-       pmem_add = pmem_add + 1;
-       end
-    
-    if (q>0) begin
-    if (out == temp16b_tbtest[q-1]) // this if condition is needed as the output is available at the next cycle
-          $display("Computed data matched :D, %40h vs.  %40h",   out, temp16b_tbtest[q-1]);
-    else begin
-          $display("Computed data ERROR (>.<),  %40h vs.  %40h",  out, temp16b_tbtest[q-1]);
-          error = error+1;
-    end
-    $display("Total ERROR: %3d",  error);
-    end
-         #0.5 clk = 1'b1;
-        
-  
-   end//End of reading
-   */
-
-
 	
-  for (q=0; q<total_cycle+1; q=q+1) begin
+  for (q=0; q<total_cycle; q=q+1) begin
     #0.5 clk = 1'b0; 
     pmem_wr = 0;
     pmem_rd = 1; 
     
-    if (q>0) begin
-        pmem_add = pmem_add + 1;
 	// First compute the sum
 	div = 0;
 	acc = 1;
@@ -471,10 +418,25 @@ $display("##### move ofifo to pmem #####");
 	#0.5 clk = 1'b1;
 	#0.5 clk = 1'b0;
 	div = 0;
-       	$display("Normalized output : %40h",   out);
-    end
-         #0.5 clk = 1'b1;
+       	//$display("Normalized output : %40h",   out);
+	
+	sfp_pmem_wr = 1;
+	pmem_wr = 1;
+	
+	#0.5 clk = 1'b1;
+	#0.5 clk = 1'b0;
+	pmem_wr = 0;
+	sfp_pmem_wr = 0;	
+		
+	pmem_add = pmem_add + 1;
+        #0.5 clk = 1'b1;
         
+         
+	if(out != temp16b_tbtest[q]) begin
+		$display("FAILED MAC output test. MAC Hardware out = %h   Expected out = %h", out, temp16b_tbtest[q]);
+	end
+	else
+		$display("******* MAC OUTPUT TEST PASSED *********");
   
    end//End of reading
 
@@ -484,15 +446,32 @@ $display("##### move ofifo to pmem #####");
      	pmem_rd = 0; pmem_add = 0; div=0;
      	#0.5 clk = 1'b1;
 	
+// ******* Read and verify normalized output from pmem ***********
+for (q=0; q<total_cycle; q=q+1) begin
+	#0.5 clk = 1'b0;
+	pmem_rd = 1;
+	#0.5 clk = 1'b1;
+	#0.5 clk = 1'b0;
+	#0.5 clk = 1'b1;
 	
+	if(out != expected_norm_output[q]) begin
+		$display("FAILED. Norm output did not match. Hardware out = %h   Expected out = %h", out, expected_norm_output[q]);
+	end
+	else
+		$display("******* NORM OUTPUT TEST PASSED *********");
+	
+	pmem_add = pmem_add + 1;
+end
 
+     	pmem_rd = 0; pmem_add = 0; div=0;
+     	#0.5 clk = 1'b1;
 //end
   
 
 ///////////////////////////////////////////
 
  for (q=0; q<total_cycle; q=q+1) begin
-$display("prd @cycle%2d: %40h", q, temp16b_tbtest[q]);
+//$display("prd @cycle%2d: %40h", q, temp16b_tbtest[q]);
      //emp16b_tbtest[t] =temp16b;
      end
 
