@@ -1,5 +1,5 @@
 set top_module fullchip
-set rtlPath "/home/linux/ieng6/ee260bwi25/ttalapaneni/ece260_project_Part1_Synthesis/verilog"
+set rtlPath "/home/linux/ieng6/ee260bwi25/arameshranganathan/ajay/ece260b/final_project/actual_project_git/ECE260B_course_project/verilog"
 
 # Target library
 set target_library /home/linux/ieng6/ee260bwi25/public/PDKdata/db/tcbn65gpluswc.db 
@@ -42,8 +42,8 @@ define_design_lib WORK -path .template
 set verilogout_single_bit false
 
 # read RTL
-analyze -format verilog -lib WORK fullchip.v
 analyze -format verilog -lib WORK core.v
+analyze -format verilog -lib WORK fullchip.v
 analyze -format verilog -lib WORK mac_array.v
 analyze -format verilog -lib WORK ofifo.v
 analyze -format verilog -lib WORK sram_w16.v
@@ -52,6 +52,12 @@ analyze -format verilog -lib WORK mac_16in.v
 analyze -format verilog -lib WORK fifo_depth16.v
 analyze -format verilog -lib WORK fifo_mux_8_1.v
 analyze -format verilog -lib WORK fifo_mux_2_1.v
+analyze -format verilog -lib WORK fifo_mux_16_1.v
+analyze -format verilog -lib WORK mac_64in.v
+analyze -format verilog -lib WORK sfp_row.v
+analyze -format verilog -lib WORK sram_128b_w16.v
+analyze -format verilog -lib WORK sram_160b_w16.v
+analyze -format verilog -lib WORK sync.v
 
 elaborate $top_module -lib WORK -update
 current_design $top_module

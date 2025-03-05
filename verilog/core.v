@@ -48,7 +48,6 @@ assign pmem_rd = inst[1];
 assign pmem_wr = inst[0];
 
 assign mac_in  = inst[6] ? kmem_out : qmem_out;
-assign pmem_in = (sfp_pmem_wr) ? normalized_out : fifo_out;
 
 
 
@@ -66,6 +65,7 @@ wire fifo_ext_rd = 1'b0;
 wire sum_in[24:0];
 wire [23:0] sum_to_other_core; 
 
+assign pmem_in = (sfp_pmem_wr) ? normalized_out : fifo_out;
 
 mac_array #(.bw(bw), .bw_psum(bw_psum), .col(col), .pr(pr)) mac_array_instance (
         .in(mac_in), 
