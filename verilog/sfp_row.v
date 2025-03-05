@@ -120,19 +120,7 @@ module sfp_row (clk, acc, div, fifo_ext_rd, sum_in, sum_out, sfp_in, sfp_out);
            sfp_out_sign5 <= sfp_in_sign5 / sum_2core;
            sfp_out_sign6 <= sfp_in_sign6 / sum_2core;
            sfp_out_sign7 <= sfp_in_sign7 / sum_2core;
-	   
-	
-       /*
-           sfp_out_sign0 <= sfp_in_sign0 >> 2;
-	   
-           sfp_out_sign1 <= sfp_in_sign1 >> 3;
-           sfp_out_sign2 <= sfp_in_sign2 >> 9;
-           sfp_out_sign3 <= sfp_in_sign3 >> 3;
-           sfp_out_sign4 <= sfp_in_sign4 >> 3;
-           sfp_out_sign5 <= sfp_in_sign5 >> 3;
-           sfp_out_sign6 <= sfp_in_sign6 >> 3;
-           sfp_out_sign7 <= sfp_in_sign7 >> 3;
-	 */  
+	   	
          end
 	 
        end
