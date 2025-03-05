@@ -454,12 +454,12 @@ for (q=0; q<total_cycle; q=q+1) begin
 	#0.5 clk = 1'b0;
 	#0.5 clk = 1'b1;
 	
-	if(out != expected_norm_output[q]) begin
-		$display("FAILED. Norm output did not match. Hardware out = %h   Expected out = %h", out, expected_norm_output[q]);
-	end
-	else
+	if(out == expected_norm_output[q])
 		$display("******* NORM OUTPUT TEST PASSED *********");
+	else
+		$display("FAILED. Norm output did not match. Hardware out = %h   Expected out = %h", out, expected_norm_output[q]);
 	
+		$display("Hardware out = %h   Expected out = %h", out, expected_norm_output[q]);
 	pmem_add = pmem_add + 1;
 end
 
