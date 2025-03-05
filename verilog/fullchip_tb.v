@@ -207,7 +207,7 @@ for (t=0; t<total_cycle; t=t+1) begin
 		sum_this_core = temp_sum;
 		// Ajay: currently hardcoded to 10. Change when 2 core is
 		// implemented
-		sum_2core = 10;
+		sum_2core = 100;
 		temp5b_norm = temp_result / sum_2core;
 		temp16b_norm = {temp16b_norm[139:0], temp5b_norm};
 	end
@@ -436,6 +436,7 @@ for (q=0; q<total_cycle; q=q+1) begin
 	else
 		$display("******* NORM OUTPUT TEST PASSED *********");
 	
+		$display("Hardware out = %h   Expected out = %h", out, expected_norm_output[q]);
 	pmem_add = pmem_add + 1;
 end
 

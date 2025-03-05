@@ -49,7 +49,6 @@ assign pmem_wr = inst[0];
 
 assign mac_in  = inst[6] ? kmem_out : qmem_out;
 
-assign pmem_in = normalized_out; // Now PMEM gets data from second FIFO
 // -----   SFP params -------
 // Input of SFP
 wire [bw_psum*col-1:0] to_normalize;
@@ -64,6 +63,7 @@ wire fifo_ext_rd = 1'b0;
 wire sum_in[24:0];
 wire [23:0] sum_to_other_core; 
 
+assign pmem_in = normalized_out; // Now PMEM gets data from second FIFO
 mac_array #(.bw(bw), .bw_psum(bw_psum), .col(col), .pr(pr)) mac_array_instance (
         .in(mac_in), 
         .clk(clk), 
