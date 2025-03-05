@@ -1,0 +1,1 @@
+/home/linux/ieng6/ee260bwi25/ttalapaneni/ece260_project_Part1_PnR_2_GHz/constraints/fullchip.sdc
