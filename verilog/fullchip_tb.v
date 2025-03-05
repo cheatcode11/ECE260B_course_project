@@ -387,7 +387,7 @@ $display("##### move ofifo to pmem #####");
 	
   for (q=0; q<total_cycle; q=q+1) begin
     #0.5 clk = 1'b0; 
-    pmem_rd = 1; 
+    pmem_rd = 0; 
     sfp_fifo_rd = 1;
     pmem_wr = 1;
 	// First compute the sum
@@ -410,7 +410,7 @@ $display("##### move ofifo to pmem #####");
 	
 	#0.5 clk = 1'b1;
 	#0.5 clk = 1'b0;
-	pmem_wr = 0;
+	pmem_wr = 1;
 	sfp_pmem_wr = 0;	
 		
 	pmem_add = pmem_add + 1;

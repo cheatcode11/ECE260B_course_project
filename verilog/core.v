@@ -49,8 +49,9 @@ assign pmem_rd = inst[1];
 assign pmem_wr = inst[0];
 
 assign mac_in  = inst[6] ? kmem_out : qmem_out;
-assign pmem_in = fifo_sfp_out; // Now PMEM gets data from second FIFO
+//assign pmem_in = fifo_sfp_out; // Now PMEM gets data from second FIFO
 
+assign pmem_in = normalized_out; // Now PMEM gets data from second FIFO
 // -----   SFP params -------
 // Input of SFP
 wire [bw_psum*col-1:0] to_normalize;
@@ -60,7 +61,7 @@ assign to_normalize = fifo_out;
 assign out = pmem_out;
 wire div = inst[17]; 
 wire acc = inst[18];
-wire sfp_pmem_wr = inst[19];
+wire [col-1:0] sfp_pmem_wr = inst[19];
 wire fifo_ext_rd = 1'b0;
 wire sum_in[24:0];
 wire [23:0] sum_to_other_core; 
@@ -94,7 +95,7 @@ sfp_row #(.bw(bw), .bw_psum(bw_psum), .col(col)) sfp_instance(
 	.sfp_out(normalized_out),
 	.sum_out(sum_to_other_core)	
 );
-
+/*
 // Second FIFO: Stores SFP output before PMEM
 ofifo #(.bw(bw_psum), .col(col))  sfp_fifo_inst (
         .reset(reset),
@@ -105,7 +106,7 @@ ofifo #(.bw(bw_psum), .col(col))  sfp_fifo_inst (
         .o_valid(fifo_valid),
         .out(fifo_sfp_out) // Output goes to PMEM
 );
-
+*/
 sram_w16 #(.sram_bit(pr*bw)) qmem_instance (
         .CLK(clk),
         .D(mem_in),
