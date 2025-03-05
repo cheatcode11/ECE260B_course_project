@@ -144,3 +144,4 @@ sh uptime
 # Done
 echo "run.scr completed successfully"
 
+exit
