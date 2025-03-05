@@ -43,7 +43,7 @@ reg ofifo_rd = 0;
 wire [bw_psum*col-1:0] out;//My additon
 
 reg [bw_psum-1:0] sfp_out;
-wire [21:0] inst;
+wire [19:0] inst;
 reg qmem_rd = 0;
 reg qmem_wr = 0; 
 reg kmem_rd = 0; 
@@ -58,11 +58,7 @@ reg [2:0] pmem_add = 0;
 reg acc = 0;// SFP
 reg div = 0;// SFP
 reg sfp_pmem_wr = 0; // SFP
-reg sfp_fifo_wr = 0;
-reg sfp_fifo_rd = 0;
 
-assign inst[21] = sfp_fifo_rd;
-assign inst[20] = sfp_fifo_wr;
 assign inst[19] = sfp_pmem_wr;
 assign inst[17] = div; // SFP
 assign inst[18] = acc; // SFP
@@ -376,30 +372,26 @@ $display("##### move ofifo to pmem #####");
   for (q=0; q<total_cycle; q=q+1) begin
     #0.5 clk = 1'b0;  
     ofifo_rd = 1; 
-    sfp_fifo_wr = 1;
 
     if (q>0) begin
        pmem_add = pmem_add + 1;
     end
          #0.5 clk = 1'b1;
    end//End of writing
-     pmem_add = 0; ofifo_rd = 0; sfp_fifo_wr = 0;
+     pmem_add = 0; ofifo_rd = 0;
 	
   for (q=0; q<total_cycle; q=q+1) begin
     #0.5 clk = 1'b0; 
     pmem_rd = 0; 
-    sfp_fifo_rd = 1;
     pmem_wr = 1;
 	// First compute the sum
 	div = 0;
 	acc = 1;
-	sfp_fifo_wr = 0;
 	#0.5 clk = 1'b1;
 	#0.5 clk = 1'b0;
 	// Need to wait for a cycle. This is how sfp is designed.
 	pmem_rd = 0;
 	acc = 0;
-	sfp_fifo_rd = 0;
 	#0.5 clk = 1'b1;
 	#0.5 clk = 1'b0;
 	// The compute the division
@@ -428,8 +420,7 @@ $display("##### move ofifo to pmem #####");
         #0.5 clk = 1'b0;
 	acc = 0;
 	div = 0;
-     	pmem_rd = 0; pmem_add = 0; div=0; sfp_fifo_rd = 0; sfp_fifo_wr = 0;
-     	#0.5 clk = 1'b1;
+     	pmem_rd = 0; pmem_add = 0; div=0;    	#0.5 clk = 1'b1;
 
 // ******* Read and verify normalized output from pmem ***********
 for (q=0; q<total_cycle; q=q+1) begin

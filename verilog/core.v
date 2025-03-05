@@ -13,7 +13,7 @@ wire   [bw_psum*col-1:0] pmem_out;
 input  [pr*bw-1:0] mem_in;
 input  clk;
 // Ajay: Bitwidth of inst increase by two to control sfp
-input  [21:0] inst; 
+input  [19:0] inst; 
 input  reset;
 
 wire  [pr*bw-1:0] mac_in;
@@ -24,7 +24,6 @@ wire  [bw_psum*col-1:0] fifo_out;
 // Output of SFP
 wire  [bw_psum*col-1:0] sfp_out;
 wire  [bw_psum*col-1:0] array_out;
-wire  [bw_psum*col-1:0] fifo_sfp_out;  // New FIFO output between SFP and PMEM
 wire  [col-1:0] fifo_wr;
 wire  ofifo_rd;
 wire [2:0] qkmem_add;
@@ -49,7 +48,6 @@ assign pmem_rd = inst[1];
 assign pmem_wr = inst[0];
 
 assign mac_in  = inst[6] ? kmem_out : qmem_out;
-//assign pmem_in = fifo_sfp_out; // Now PMEM gets data from second FIFO
 
 assign pmem_in = normalized_out; // Now PMEM gets data from second FIFO
 // -----   SFP params -------
@@ -95,18 +93,7 @@ sfp_row #(.bw(bw), .bw_psum(bw_psum), .col(col)) sfp_instance(
 	.sfp_out(normalized_out),
 	.sum_out(sum_to_other_core)	
 );
-/*
-// Second FIFO: Stores SFP output before PMEM
-ofifo #(.bw(bw_psum), .col(col))  sfp_fifo_inst (
-        .reset(reset),
-        .clk(clk),
-        .in(normalized_out),
-        .wr(sfp_pmem_wr), // Write when SFP processing is done
-        .rd(ofifo_rd),    // Read when PMEM is ready
-        .o_valid(fifo_valid),
-        .out(fifo_sfp_out) // Output goes to PMEM
-);
-*/
+
 sram_w16 #(.sram_bit(pr*bw)) qmem_instance (
         .CLK(clk),
         .D(mem_in),

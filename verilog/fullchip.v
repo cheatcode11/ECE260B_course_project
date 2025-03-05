@@ -9,7 +9,7 @@ parameter pr = 8;//was 16
 
 input  clk; 
 input  [pr*bw-1:0] mem_in; 
-input  [21:0] inst;   // Ajay
+input  [19:0] inst;   // Ajay
 input  reset;
 
 //My addition
