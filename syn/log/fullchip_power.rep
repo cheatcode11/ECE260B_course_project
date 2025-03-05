@@ -7,7 +7,7 @@ Report : power
         -analysis_effort low
 Design : fullchip
 Version: K-2015.06-SP2
-Date   : Mon Mar  3 22:34:06 2025
+Date   : Tue Mar  4 23:40:45 2025
 ****************************************
 
 
@@ -27,10 +27,10 @@ core_col8_bw8_bw_psum20_pr8
 mac_array_col8_bw8_bw_psum20_pr8
                        ZeroWireload      tcbn65gpluswc
 ofifo_col8_bw20        ZeroWireload      tcbn65gpluswc
-sram_w16_sram_bit64_1  ZeroWireload      tcbn65gpluswc
-sram_w16_sram_bit160   ZeroWireload      tcbn65gpluswc
 sfp_row_col8_bw8_bw_psum20
                        ZeroWireload      tcbn65gpluswc
+sram_w16_sram_bit64_1  ZeroWireload      tcbn65gpluswc
+sram_w16_sram_bit160   ZeroWireload      tcbn65gpluswc
 mac_col_bw8_bw_psum20_pr8_col_id1
                        ZeroWireload      tcbn65gpluswc
 mac_col_bw8_bw_psum20_pr8_col_id2
@@ -83,6 +83,20 @@ fifo_mux_8_1_bw20_simd1_3
 fifo_mux_8_1_bw20_simd1_4
                        ZeroWireload      tcbn65gpluswc
 fifo_mux_8_1_bw20_simd1_5
+                       ZeroWireload      tcbn65gpluswc
+mac_16in_bw8_bw_psum20_pr8_0
+                       ZeroWireload      tcbn65gpluswc
+mac_16in_bw8_bw_psum20_pr8_1
+                       ZeroWireload      tcbn65gpluswc
+mac_16in_bw8_bw_psum20_pr8_2
+                       ZeroWireload      tcbn65gpluswc
+mac_16in_bw8_bw_psum20_pr8_3
+                       ZeroWireload      tcbn65gpluswc
+mac_16in_bw8_bw_psum20_pr8_4
+                       ZeroWireload      tcbn65gpluswc
+mac_16in_bw8_bw_psum20_pr8_5
+                       ZeroWireload      tcbn65gpluswc
+mac_16in_bw8_bw_psum20_pr8_6
                        ZeroWireload      tcbn65gpluswc
 fifo_mux_2_1_bw20_simd1_0
                        ZeroWireload      tcbn65gpluswc
@@ -194,20 +208,6 @@ fifo_mux_2_1_bw20_simd1_53
                        ZeroWireload      tcbn65gpluswc
 fifo_mux_2_1_bw20_simd1_54
                        ZeroWireload      tcbn65gpluswc
-mac_16in_bw8_bw_psum20_pr8_0
-                       ZeroWireload      tcbn65gpluswc
-mac_16in_bw8_bw_psum20_pr8_1
-                       ZeroWireload      tcbn65gpluswc
-mac_16in_bw8_bw_psum20_pr8_2
-                       ZeroWireload      tcbn65gpluswc
-mac_16in_bw8_bw_psum20_pr8_3
-                       ZeroWireload      tcbn65gpluswc
-mac_16in_bw8_bw_psum20_pr8_4
-                       ZeroWireload      tcbn65gpluswc
-mac_16in_bw8_bw_psum20_pr8_5
-                       ZeroWireload      tcbn65gpluswc
-mac_16in_bw8_bw_psum20_pr8_6
-                       ZeroWireload      tcbn65gpluswc
 
 
 Global Operating Voltage = 0.9  
@@ -219,12 +219,12 @@ Power-specific unit information :
     Leakage Power Units = 1nW
 
 
-  Cell Internal Power  =  35.3038 mW   (97%)
-  Net Switching Power  =   1.0180 mW    (3%)
+  Cell Internal Power  =  35.1076 mW   (97%)
+  Net Switching Power  = 989.5997 uW    (3%)
                          ---------
-Total Dynamic Power    =  36.3217 mW  (100%)
+Total Dynamic Power    =  36.0972 mW  (100%)
 
-Cell Leakage Power     =   1.1774 mW
+Cell Leakage Power     =   1.2150 mW
 
 
                  Internal         Switching           Leakage            Total
@@ -234,9 +234,9 @@ io_pad             0.0000            0.0000            0.0000            0.0000 
 memory             0.0000            0.0000            0.0000            0.0000  (   0.00%)
 black_box          0.0000            0.0000            0.0000            0.0000  (   0.00%)
 clock_network      0.0000            0.0000            0.0000            0.0000  (   0.00%)
-register          33.7317            0.2141        3.1747e+05           34.2633  (  91.37%)
+register          33.4989            0.1689        3.0787e+05           33.9756  (  91.06%)
 sequential         0.0000            0.0000            0.0000            0.0000  (   0.00%)
-combinational      1.5721            0.8038        8.5992e+05            3.2358  (   8.63%)
+combinational      1.6088            0.8207        9.0711e+05            3.3366  (   8.94%)
 --------------------------------------------------------------------------------------------------
-Total             35.3038 mW         1.0180 mW     1.1774e+06 nW        37.4992 mW
+Total             35.1077 mW         0.9896 mW     1.2150e+06 nW        37.3122 mW
 1
