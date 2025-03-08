@@ -14,7 +14,7 @@ module sfp_row (clk, acc, div, fifo_ext_rd, sum_in, sum_out, sfp_in, sfp_out);
   output [col*bw_psum-1:0] sfp_out;
   output [bw_psum+3:0] sum_out;
   wire [bw_psum+3:0] sum_this_core;
-  wire signed [bw_psum-1:0] sum_2core;
+  wire [bw_psum-1:0] sum_2core;
   wire signed [bw_psum-1:0] sfp_in_sign0;
   wire signed [bw_psum-1:0] sfp_in_sign1;
   wire signed [bw_psum-1:0] sfp_in_sign2;
@@ -58,7 +58,7 @@ module sfp_row (clk, acc, div, fifo_ext_rd, sum_in, sum_out, sfp_in, sfp_out);
 
 
   //assign sum_2core = sum_this_core[bw_psum+3:7] + sum_in[bw_psum+3:7];//
-  assign sum_2core = 10;
+  assign sum_2core = 8;
   assign abs[bw_psum*1-1 : bw_psum*0] = (sfp_in[bw_psum*1-1]) ?  (~sfp_in[bw_psum*1-1 : bw_psum*0] + 1)  :  sfp_in[bw_psum*1-1 : bw_psum*0];
   assign abs[bw_psum*2-1 : bw_psum*1] = (sfp_in[bw_psum*2-1]) ?  (~sfp_in[bw_psum*2-1 : bw_psum*1] + 1)  :  sfp_in[bw_psum*2-1 : bw_psum*1];
   assign abs[bw_psum*3-1 : bw_psum*2] = (sfp_in[bw_psum*3-1]) ?  (~sfp_in[bw_psum*3-1 : bw_psum*2] + 1)  :  sfp_in[bw_psum*3-1 : bw_psum*2];
@@ -111,7 +111,8 @@ module sfp_row (clk, acc, div, fifo_ext_rd, sum_in, sum_out, sfp_in, sfp_out);
          fifo_wr <= 0;
    
          if (div) begin
-           sfp_out_sign0 <= sfp_in_sign0 / sum_2core;
+          /* 
+	   sfp_out_sign0 <= sfp_in_sign0 / sum_2core;
            sfp_out_sign1 <= sfp_in_sign1 / sum_2core;
            sfp_out_sign2 <= sfp_in_sign2 / sum_2core;
            sfp_out_sign3 <= sfp_in_sign3 / sum_2core;
@@ -119,7 +120,18 @@ module sfp_row (clk, acc, div, fifo_ext_rd, sum_in, sum_out, sfp_in, sfp_out);
            sfp_out_sign5 <= sfp_in_sign5 / sum_2core;
            sfp_out_sign6 <= sfp_in_sign6 / sum_2core;
            sfp_out_sign7 <= sfp_in_sign7 / sum_2core;
-         end
+        */	
+		
+           sfp_out_sign0 <= sfp_in_sign0 >> 3;
+           sfp_out_sign1 <= sfp_in_sign1 >> 3;
+           sfp_out_sign2 <= sfp_in_sign2 >> 3;
+           sfp_out_sign3 <= sfp_in_sign3 >> 3;
+           sfp_out_sign4 <= sfp_in_sign4 >> 3;
+           sfp_out_sign5 <= sfp_in_sign5 >> 3;
+           sfp_out_sign6 <= sfp_in_sign6 >> 3;
+           sfp_out_sign7 <= sfp_in_sign7 >> 3;
+	   
+   	end
        end
    	//$display("Sum_2core = %40h", sum_2core);
 	end

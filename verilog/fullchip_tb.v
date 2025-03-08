@@ -94,7 +94,7 @@ reg signed [bw_psum*col-1:0] temp16b_norm;
 
 reg [bw_psum+3:0] sum_in = 1;
 reg [bw_psum+3:0] sum_this_core;
-reg signed [bw_psum-1:0] sum_2core;
+reg [bw_psum-1:0] sum_2core;
 
 fullchip #(.bw(bw), .bw_psum(bw_psum), .col(col), .pr(pr)) fullchip_instance (
       .reset(reset),
@@ -219,8 +219,9 @@ for (t=0; t<total_cycle; t=t+1) begin
 		sum_this_core = temp_sum;
 		// Ajay: currently hardcoded to 10. Change when 2 core is
 		// implemented
-		sum_2core = 10;
-		temp5b_norm = temp_result / sum_2core;
+		sum_2core = 8;
+		//temp5b_norm = temp_result / sum_2core;
+		temp5b_norm = temp_result >> 3;
 		temp16b_norm = {temp16b_norm[139:0], temp5b_norm};
 	end
 	//$display("");
