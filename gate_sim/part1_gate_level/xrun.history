@@ -1,0 +1,5 @@
+s1(04Mar2025:21:02:27):  xrun +gui +access+rwc +xm64bit +xmstatus +xmtimescale+1ns/1ps +xmoveride_timescale -v ./netlist/fullchip.pnr.v -v /home/linux/ieng6/ee260bwi25/public/PDKdata/verilog/tcbn65gplus.v ./netlist/fullchip_tb.v 
+s2(04Mar2025:21:08:05):  xrun +gui +access+rwc +xm64bit +xmstatus +xmtimescale+1ns/1ps +xmoveride_timescale -v ./netlist/fullchip.pnr.v -v /home/linux/ieng6/ee260bwi25/public/PDKdata/verilog/tcbn65gplus.v ./netlist/fullchip_tb.v 
+s3(08Mar2025:14:51:16):  xrun +gui +access+rwc +xm64bit +xmstatus +xmtimescale+1ns/1ps +xmoveride_timescale -v ./netlist/fullchip.pnr.v -v /home/linux/ieng6/ee260bwi25/public/PDKdata/verilog/tcbn65gplus.v ./netlist/fullchip_tb.v 
+s4(08Mar2025:14:55:38):  xrun +gui +access+rwc +xm64bit +xmstatus +xmtimescale+1ns/1ps +xmoveride_timescale -v ./netlist/fullchip.pnr.v -v /home/linux/ieng6/ee260bwi25/public/PDKdata/verilog/tcbn65gplus.v ./netlist/fullchip_tb.v 
+s5(08Mar2025:14:57:53):  xrun +gui +access+rwc +xm64bit +xmstatus +xmtimescale+1ns/1ps +xmoveride_timescale -v ./netlist/fullchip.pnr.v -v /home/linux/ieng6/ee260bwi25/public/PDKdata/verilog/tcbn65gplus.v ./netlist/fullchip_tb.v 

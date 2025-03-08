@@ -1,0 +1,1 @@
+/home/linux/ieng6/ee260bwi25/a2murthy/ECE260B_course_project/PnR_Synthesis/ece260_project_Part1_PnR/constraints/fullchip.sdc
