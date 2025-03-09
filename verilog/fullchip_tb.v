@@ -219,7 +219,7 @@ for (t=0; t<total_cycle; t=t+1) begin
 		sum_this_core = temp_sum;
 		// Ajay: currently hardcoded to 10. Change when 2 core is
 		// implemented
-		sum_2core = 10;
+		sum_2core = 8;
 		temp5b_norm = temp_result / sum_2core;
 		//temp5b_norm = temp_result >> 3;
 		temp16b_norm = {temp16b_norm[139:0], temp5b_norm};
