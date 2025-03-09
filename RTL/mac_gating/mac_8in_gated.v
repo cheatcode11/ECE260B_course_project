@@ -10,45 +10,45 @@ output [bw_psum-1:0] out;
 //input  [pr*bw-1:0] a;
 //input  [pr*bw-1:0] b;
 
-input [bw-1:0] a_0;
-input [bw-1:0] a_1;
-input [bw-1:0] a_2;
-input [bw-1:0] a_3;
-input [bw-1:0] a_4;
-input [bw-1:0] a_5;
-input [bw-1:0] a_6;
-input [bw-1:0] a_7;
+input signed [bw-1:0] a_0;
+input signed [bw-1:0] a_1;
+input signed [bw-1:0] a_2;
+input signed [bw-1:0] a_3;
+input signed [bw-1:0] a_4;
+input signed [bw-1:0] a_5;
+input signed [bw-1:0] a_6;
+input signed [bw-1:0] a_7;
 
-input [bw-1:0] b_0;
-input [bw-1:0] b_1;
-input [bw-1:0] b_2;
-input [bw-1:0] b_3;
-input [bw-1:0] b_4;
-input [bw-1:0] b_5;
-input [bw-1:0] b_6;
-input [bw-1:0] b_7;
+input signed [bw-1:0] b_0;
+input signed [bw-1:0] b_1;
+input signed [bw-1:0] b_2;
+input signed [bw-1:0] b_3;
+input signed [bw-1:0] b_4;
+input signed [bw-1:0] b_5;
+input signed [bw-1:0] b_6;
+input signed [bw-1:0] b_7;
 
 input  clk;
 input  [pr-1:0] b_zero;
 input  [pr-1:0] a_zero;
 
-wire		[2*bw-1:0]	product0	;
-wire		[2*bw-1:0]	product1	;
-wire		[2*bw-1:0]	product2	;
-wire		[2*bw-1:0]	product3	;
-wire		[2*bw-1:0]	product4	;
-wire		[2*bw-1:0]	product5	;
-wire		[2*bw-1:0]	product6	;
-wire		[2*bw-1:0]	product7	;
+wire	signed	[2*bw-1:0]	product0	;
+wire	signed	[2*bw-1:0]	product1	;
+wire	signed	[2*bw-1:0]	product2	;
+wire	signed	[2*bw-1:0]	product3	;
+wire	signed	[2*bw-1:0]	product4	;
+wire	signed	[2*bw-1:0]	product5	;
+wire	signed	[2*bw-1:0]	product6	;
+wire	signed	[2*bw-1:0]	product7	;
 
-reg		[2*bw-1:0]	product_reg0	;
-reg		[2*bw-1:0]	product_reg1	;
-reg		[2*bw-1:0]	product_reg2	;
-reg		[2*bw-1:0]	product_reg3	;
-reg		[2*bw-1:0]	product_reg4	;
-reg		[2*bw-1:0]	product_reg5	;
-reg		[2*bw-1:0]	product_reg6	;
-reg		[2*bw-1:0]	product_reg7	;
+reg	signed	[2*bw-1:0]	product_reg0	;
+reg	signed	[2*bw-1:0]	product_reg1	;
+reg	signed	[2*bw-1:0]	product_reg2	;
+reg	signed	[2*bw-1:0]	product_reg3	;
+reg	signed	[2*bw-1:0]	product_reg4	;
+reg	signed	[2*bw-1:0]	product_reg5	;
+reg	signed	[2*bw-1:0]	product_reg6	;
+reg	signed	[2*bw-1:0]	product_reg7	;
 
 genvar i;
 
@@ -108,5 +108,4 @@ assign out =
 
 
 endmodule
-
 
