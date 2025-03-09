@@ -2,7 +2,3 @@ define LIB_MAP ( $LIB_MAP \
 , ../../../../../../../public/PDKdata/verilog/tcbn65gplus.v => tcbn65gplus \
 , ../../../netlist/fullchip.pnr.v => fullchip \
 )
-define LIB_MAP ( $LIB_MAP \
-, ../../../../../../../public/PDKdata/verilog/tcbn65gplus.v => tcbn65gplus \
-, ../../../netlist/fullchip.pnr.v => fullchip \
-)
