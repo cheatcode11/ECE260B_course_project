@@ -51,7 +51,8 @@ mac_col_gated #(.bw(bw), .bw_psum(bw_psum), .pr(pr)) mac_col_instance (
       .i_inst(inst),
       .o_inst(o_inst),
       .q_zero(q_zero),
-      .fifo_wr(fifo_wr)
+      .fifo_wr(fifo_wr),
+      .k_zero(k_zero)
 
 );
 
@@ -181,17 +182,6 @@ $display("##### Kdata loading #####");
     q_zero[7] = ~|K[7];
 
 
-
-
-//    q_in[9*bw-1:8*bw] = K[8];
-//    q_in[10*bw-1:9*bw] = K[9];
-//    q_in[11*bw-1:10*bw] = K[10];
-//    q_in[12*bw-1:11*bw] = K[11];
-//    q_in[13*bw-1:12*bw] = K[12];
-//    q_in[14*bw-1:13*bw] = K[13];
-//    q_in[15*bw-1:14*bw] = K[14];
-//    q_in[16*bw-1:15*bw] = K[15];
-
     #0.5 clk = 1'b1;  
     #0.5 clk = 1'b0;  
     inst[0] = 0;  
@@ -216,7 +206,7 @@ $display("##### Qmem writing  #####");
   inst[1] = 1;
   #0.5 clk = 1'b1;   
 
-  for (q=0; q<total_cycle+2; q=q+1) begin
+  for (q=0; q<total_cycle+1; q=q+1) begin
 
     #0.5 clk = 1'b0;  
     
@@ -238,24 +228,13 @@ $display("##### Qmem writing  #####");
     q_zero[6] = ~|Q[q][6];
     q_zero[7] = ~|Q[q][7];
 
-
-
-//    q_in[9*bw-1:8*bw] = Q[q][8];
-//    q_in[10*bw-1:9*bw] = Q[q][9];
-//    q_in[11*bw-1:10*bw] = Q[q][10];
-//    q_in[12*bw-1:11*bw] = Q[q][11];
-//    q_in[13*bw-1:12*bw] = Q[q][12];
-//    q_in[14*bw-1:13*bw] = Q[q][13];
-//    q_in[15*bw-1:14*bw] = Q[q][14];
-//    q_in[16*bw-1:15*bw] = Q[q][15];
-
     #0.5 clk = 1'b1;  
 
     if (q == total_cycle+1)
        inst[1] = 0;
   
-    if (q>1)
-      $display("Simulated results @ %1d-th cycle %x", q-2, out);
+    if (q>0)
+      $display("Simulated results @ %1d-th cycle %x", q-1, out);
 
   end
 
@@ -274,8 +253,4 @@ $display("##### Qmem writing  #####");
 end
 
 endmodule
-
-
-
-
 
