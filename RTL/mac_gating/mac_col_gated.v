@@ -3,7 +3,7 @@
 //
 //Code is hardcoded for an 8 element vector ie pr = 8
 //
-module mac_col_gated (clk, reset, out, q_in, q_out, i_inst, fifo_wr, o_inst, q_zero);
+module mac_col_gated (clk, reset, out, q_in, q_out, i_inst, fifo_wr, o_inst, q_zero, k_zero);
 
 parameter bw = 8;
 parameter bw_psum = 2*bw+6;
@@ -28,14 +28,14 @@ reg    [1:0] inst_2q;
 //reg   signed [pr*bw-1:0] query_q;
 //reg   signed [pr*bw-1:0] key_q;
 
-reg signed [bw-1:0] query_q_0;
-reg signed [bw-1:0] query_q_1;
-reg signed [bw-1:0] query_q_2;
-reg signed [bw-1:0] query_q_3;
-reg signed [bw-1:0] query_q_4;
-reg signed [bw-1:0] query_q_5;
-reg signed [bw-1:0] query_q_6;
-reg signed [bw-1:0] query_q_7;
+wire signed [bw-1:0] query_q_0;
+wire signed [bw-1:0] query_q_1;
+wire signed [bw-1:0] query_q_2;
+wire signed [bw-1:0] query_q_3;
+wire signed [bw-1:0] query_q_4;
+wire signed [bw-1:0] query_q_5;
+wire signed [bw-1:0] query_q_6;
+wire signed [bw-1:0] query_q_7;
 
 reg signed [bw-1:0] key_q_0;
 reg signed [bw-1:0] key_q_1;
@@ -45,7 +45,6 @@ reg signed [bw-1:0] key_q_4;
 reg signed [bw-1:0] key_q_5;
 reg signed [bw-1:0] key_q_6;
 reg signed [bw-1:0] key_q_7;
-
 
 
 reg   [pr-1:0] q_zero_reg;
@@ -85,6 +84,55 @@ mac_8in_gated #(.bw(bw), .bw_psum(bw_psum), .pr(pr)) mac_8in_gated_instance (
 	.b_zero(k_zero_reg)
 ); 
 
+gating_latch  gating_latch_0 (
+  .signal_in(q_in[bw*1-1:bw*0]),
+  .signal_enable(~q_zero_reg[0]),
+  .reset(reset),
+  .signal_out(query_q_0)
+);
+gating_latch  gating_latch_1 (
+  .signal_in(q_in[bw*2-1:bw*1]),
+  .signal_enable(~q_zero_reg[1]),
+  .reset(reset),
+  .signal_out(query_q_1)
+);
+gating_latch  gating_latch_2 (
+  .signal_in(q_in[bw*3-1:bw*2]),
+  .signal_enable(~q_zero_reg[2]),
+  .reset(reset),
+  .signal_out(query_q_2)
+);
+gating_latch  gating_latch_3 (
+  .signal_in(q_in[bw*4-1:bw*3]),
+  .signal_enable(~q_zero_reg[3]),
+  .reset(reset),
+  .signal_out(query_q_3)
+);
+gating_latch  gating_latch_4 (
+  .signal_in(q_in[bw*5-1:bw*4]),
+  .signal_enable(~q_zero_reg[4]),
+  .reset(reset),
+  .signal_out(query_q_4)
+);
+gating_latch  gating_latch_5 (
+  .signal_in(q_in[bw*6-1:bw*5]),
+  .signal_enable(~q_zero_reg[5]),
+  .reset(reset),
+  .signal_out(query_q_5)
+);
+gating_latch  gating_latch_6 (
+  .signal_in(q_in[bw*7-1:bw*6]),
+  .signal_enable(~q_zero_reg[6]),
+  .reset(reset),
+  .signal_out(query_q_6)
+);
+gating_latch  gating_latch_7 (
+  .signal_in(q_in[bw*8-1:bw*7]),
+  .signal_enable(~q_zero_reg[7]),
+  .reset(reset),
+  .signal_out(query_q_7)
+);
+
 
 always @ (posedge clk) begin
   if (reset) begin
@@ -92,43 +140,44 @@ always @ (posedge clk) begin
     load_ready_q <= 1;
     inst_q <= 0;
     inst_2q <= 0;
+    q_zero_reg <= 'd0;
   end
   else begin
     inst_q <= i_inst;
     inst_2q <= inst_q;
     if (inst_q[0]) begin
 
-       query_q_0 <= q_in[bw*1-1:bw*0];
-       query_q_1 <= q_in[bw*2-1:bw*1];
-       query_q_2 <= q_in[bw*3-1:bw*2];
-       query_q_3 <= q_in[bw*4-1:bw*3];
-       query_q_4 <= q_in[bw*5-1:bw*4];
-       query_q_5 <= q_in[bw*6-1:bw*5];
-       query_q_6 <= q_in[bw*7-1:bw*6];
-       query_q_7 <= q_in[bw*8-1:bw*7];
+      //  query_q_0 <= q_in[bw*1-1:bw*0];
+      //  query_q_1 <= q_in[bw*2-1:bw*1];
+      //  query_q_2 <= q_in[bw*3-1:bw*2];
+      //  query_q_3 <= q_in[bw*4-1:bw*3];
+      //  query_q_4 <= q_in[bw*5-1:bw*4];
+      //  query_q_5 <= q_in[bw*6-1:bw*5];
+      //  query_q_6 <= q_in[bw*7-1:bw*6];
+      //  query_q_7 <= q_in[bw*8-1:bw*7];
 
 
        if (cnt_q == 9-col_id)begin
          cnt_q <= 0;
 
          key_q_0 <= q_in[bw*1-1:bw*0];
-	 key_q_1 <= q_in[bw*2-1:bw*1];
+	       key_q_1 <= q_in[bw*2-1:bw*1];
          key_q_2 <= q_in[bw*3-1:bw*2];
-	 key_q_3 <= q_in[bw*4-1:bw*3];
+	       key_q_3 <= q_in[bw*4-1:bw*3];
          key_q_4 <= q_in[bw*5-1:bw*4];
-	 key_q_5 <= q_in[bw*6-1:bw*5];
+      	 key_q_5 <= q_in[bw*6-1:bw*5];
          key_q_6 <= q_in[bw*7-1:bw*6];
-	 key_q_7 <= q_in[bw*8-1:bw*7];
+	       key_q_7 <= q_in[bw*8-1:bw*7];
 
 
-	 k_zero_reg[0] <= q_zero[0];
-	 k_zero_reg[1] <= q_zero[1];
-	 k_zero_reg[2] <= q_zero[2];
-	 k_zero_reg[3] <= q_zero[3];
-	 k_zero_reg[4] <= q_zero[4];
-	 k_zero_reg[5] <= q_zero[5];
-	 k_zero_reg[6] <= q_zero[6];
-	 k_zero_reg[7] <= q_zero[7];
+	 k_zero_reg[0] <= k_zero[0];
+	 k_zero_reg[1] <= k_zero[1];
+	 k_zero_reg[2] <= k_zero[2];
+	 k_zero_reg[3] <= k_zero[3];
+	 k_zero_reg[4] <= k_zero[4];
+	 k_zero_reg[5] <= k_zero[5];
+	 k_zero_reg[6] <= k_zero[6];
+	 k_zero_reg[7] <= k_zero[7];
 
 
          load_ready_q <= 0;
@@ -138,14 +187,14 @@ always @ (posedge clk) begin
     end
     else if(inst_q[1]) begin
       //out     <= psum;
-       query_q_0 <= q_in[bw*1-1:bw*0];
-       query_q_1 <= q_in[bw*2-1:bw*1];
-       query_q_2 <= q_in[bw*3-1:bw*2];
-       query_q_3 <= q_in[bw*4-1:bw*3];
-       query_q_4 <= q_in[bw*5-1:bw*4];
-       query_q_5 <= q_in[bw*6-1:bw*5];
-       query_q_6 <= q_in[bw*7-1:bw*6];
-       query_q_7 <= q_in[bw*8-1:bw*7];
+      //  query_q_0 <= q_in[bw*1-1:bw*0];
+      //  query_q_1 <= q_in[bw*2-1:bw*1];
+      //  query_q_2 <= q_in[bw*3-1:bw*2];
+      //  query_q_3 <= q_in[bw*4-1:bw*3];
+      //  query_q_4 <= q_in[bw*5-1:bw*4];
+      //  query_q_5 <= q_in[bw*6-1:bw*5];
+      //  query_q_6 <= q_in[bw*7-1:bw*6];
+      //  query_q_7 <= q_in[bw*8-1:bw*7];
 
       q_zero_reg[0] <= q_zero[0];
       q_zero_reg[1] <= q_zero[1];
@@ -166,4 +215,3 @@ always @ (posedge clk) begin
 end
 
 endmodule
-
