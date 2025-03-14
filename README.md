@@ -1,8 +1,7 @@
 **RTL** 
 Mac Gating code : rtl/mac_gating
 Unoptimized Code: rtl/sim_pre_change
-Initial optimized code: rtl/sim_initial_optimize
-
+Initial optimized code: rtl/sim_optimized_initial
 
 **GateSim**
 
