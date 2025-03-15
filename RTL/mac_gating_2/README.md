@@ -37,10 +37,14 @@ The above modifications facilitate enabling clock gating on the negative edge of
 - `mac_array_gated.v` - Full MAC array with gated elements.
 - `mac_wrapper.v` - Wrapper that integrates the new gated MAC array.
 - `mac_array_wrapper.v` - Direct replacement for the original `mac_array`.
-- `fullchip_tb.v` - Testbench for full-chip verification.
+- `fullchip_gated_tb.v` - Testbench for full-chip verification.
 
 ## Usage
-Ensure that all gated versions of the modules are included in the design before running simulations or synthesis. The `fullchip_tb` can be used to validate the correctness of the implementation.
+Ensure that all gated versions of the modules are included in the design before running simulations or synthesis. The `fullchip_gated_tb` can be used to validate the correctness of the implementation.
+
+Important to note: The testbench has been modified. 
+- The pipeline increases the result latency by 1 cycle, which means the new MAC array needs to run for one more cycle.
+- The result compared is no longer one cycle behind, it is two cycles behind.
 
 ## Conclusion
 This implementation optimizes power usage by gating the clock in the MAC array. The additional pipeline ensures correct timing and functionality while maintaining compatibility with the existing architecture.
