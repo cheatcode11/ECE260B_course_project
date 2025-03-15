@@ -18,8 +18,6 @@ extractRC
 setAnalysisMode -analysisType onChipVariation -cppr both
 optDesign -postRoute -setup -hold
 
-addFiller -cell {DCAP} -merge true
-
 # Fix DRC errors
 optDesign -postRoute -drv
 optDesign -postRoute -inc

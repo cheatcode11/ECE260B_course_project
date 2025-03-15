@@ -20,7 +20,7 @@ place_opt_design
 
 
 #addFiller -cell {DCAP DCAP4 DCAP8 DCAP16 DCAP32} -merge true
-addFiller -cell {DCAP} -merge true
+#addFiller -cell {DCAP} -merge true
 
 
 saveDesign placement.enc
