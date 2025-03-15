@@ -36,7 +36,7 @@ The modified mac_array_gated, which incorporates clock-gated elements.
 
 mac_array_wrapper serves as a direct replacement for the original mac_array, ensuring seamless integration.
 
-![MAC Gating Diagram](RTL/mac_gating_2/mac_gating.png)
+![MAC Gating Diagram](./mac_gating.png)
 
 File Structure
 
