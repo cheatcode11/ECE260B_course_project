@@ -1,0 +1,16 @@
+fullchip_gated_tb.v
+fullchip_gated.v
+core_gated.v
+mac_col_gated.v
+mac_8in_gated.v
+mac_array_wrapper.v
+mac_array_gated.v
+mac_input_pipeline.v
+ff.v
+clk_gate.v
+./verilog/sram_w16.v
+./verilog/ofifo.v
+./verilog/fifo_depth16.v
+./verilog/fifo_mux_16_1.v
+./verilog/fifo_mux_8_1.v
+./verilog/fifo_mux_2_1.v
