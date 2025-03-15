@@ -7,5 +7,6 @@ catch {setNanoRouteMode -quiet -routeTopRoutingLayer 4}
 catch { setIlmMode -keepHighFanoutPorts true -keepLoopBack false -keepFlatten true }
 catch { setDelayCalMode -engine aae }
 catch { setPinAssignMode -maxLayer 4 }
+catch { setPinAssignMode -pinEditInBatch true }
 catch { setTrialRouteMode -maxRouteLayer 4 }
 catch { setAddStripeMode -break_at block_ring }

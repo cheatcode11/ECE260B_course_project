@@ -1,0 +1,173 @@
+#######################################################
+#                                                     
+#  Innovus Command Logging File                     
+#  Created on Wed Mar 12 20:28:38 2025                
+#                                                     
+#######################################################
+
+#@(#)CDS: Innovus v15.23-s045_1 (64bit) 04/22/2016 12:32 (Linux 2.6.18-194.el5)
+#@(#)CDS: NanoRoute 15.23-s045_1 NR160414-1105/15_23-UB (database version 2.30, 317.6.1) {superthreading v1.26}
+#@(#)CDS: AAE 15.23-s014 (64bit) 04/22/2016 (Linux 2.6.18-194.el5)
+#@(#)CDS: CTE 15.23-s022_1 () Apr 22 2016 09:38:45 ( )
+#@(#)CDS: SYNTECH 15.23-s008_1 () Apr 12 2016 21:52:59 ( )
+#@(#)CDS: CPE v15.23-s045
+#@(#)CDS: IQRC/TQRC 15.1.4-s213 (64bit) Tue Feb  9 17:31:28 PST 2016 (Linux 2.6.18-194.el5)
+
+set_global _enable_mmmc_by_default_flow      $CTE::mmmc_default
+suppressMessage ENCEXT-2799
+getDrawView
+loadWorkspace -name Physical
+win
+restoreDesign /home/linux/ieng6/ee260bwi25/ttalapaneni/ECE260B_course_project/Git_organized_folder/ECE260B_course_project/pnr/part3_hier/pnr_2_SRAM/route.enc.dat core
+verifyGeometry
+fit
+zoomBox 81.746 223.785 123.228 204.264
+selectMarker 99.2500 214.1100 99.5500 214.3300 1 1 6
+deselectAll
+selectWire 96.0000 46.0000 99.0000 212.6000 2 VDD
+deselectAll
+selectWire 96.0000 46.0000 99.0000 212.6000 2 VDD
+deselectAll
+selectMarker 96.0000 209.6350 99.0000 209.9650 1 1 6
+deselectAll
+selectWire 92.5000 213.1000 269.3000 216.1000 1 VSS
+deselectAll
+selectMarker 107.7450 213.8800 107.8350 214.9250 1 1 6
+zoomBox 107.547 214.862 108.628 213.188
+deselectAll
+selectMarker 107.6700 213.8800 107.8350 214.0600 1 1 6
+fit
+zoomBox 453.452 384.829 487.613 351.482
+deselectAll
+selectWire 342.5000 363.1000 519.3000 366.1000 1 VSS
+deselectAll
+selectWire 462.6500 360.1500 462.7500 366.0500 4 FE_OCPN2200_out_97_
+zoomBox 458.170 364.964 460.199 362.513
+deselectAll
+selectMarker 459.0100 363.5500 459.1900 363.6500 1 1 6
+deselectAll
+selectMarker 459.4500 363.5800 459.5500 364.0900 1 1 6
+fit
+zoomBox 80.120 227.852 286.713 199.384
+zoomBox 91.277 218.811 101.023 206.372
+deselectAll
+selectMarker 97.2500 213.7100 97.5500 213.8900 1 1 6
+deselectAll
+selectMarker 95.1650 213.7350 95.2750 214.4200 1 1 6
+deselectAll
+selectMarker 94.4500 215.5100 94.5500 216.1000 1 1 6
+fit
+fit
+zoomBox 105.612 124.659 204.704 75.585
+fit
+setLayerPreference net -isVisible 0
+setLayerPreference power -isVisible 0
+setLayerPreference pgPower -isVisible 0
+setLayerPreference pgGround -isVisible 0
+setLayerPreference shield -isVisible 0
+setLayerPreference metalFill -isVisible 0
+setLayerPreference clock -isVisible 0
+setLayerPreference whatIfShape -isVisible 0
+setLayerPreference net -isVisible 1
+setLayerPreference power -isVisible 1
+setLayerPreference pgPower -isVisible 1
+setLayerPreference pgGround -isVisible 1
+setLayerPreference shield -isVisible 1
+setLayerPreference metalFill -isVisible 1
+setLayerPreference clock -isVisible 1
+setLayerPreference whatIfShape -isVisible 1
+setLayerPreference allM0 -isVisible 0
+setLayerPreference allM1Cont -isVisible 0
+setLayerPreference allM1 -isVisible 0
+setLayerPreference allM2Cont -isVisible 0
+setLayerPreference allM2 -isVisible 0
+setLayerPreference allM3Cont -isVisible 0
+setLayerPreference allM3 -isVisible 0
+setLayerPreference allM4Cont -isVisible 0
+setLayerPreference allM4 -isVisible 0
+setLayerPreference allM5Cont -isVisible 0
+setLayerPreference allM5 -isVisible 0
+setLayerPreference allM6Cont -isVisible 0
+setLayerPreference allM6 -isVisible 0
+setLayerPreference allM7Cont -isVisible 0
+setLayerPreference allM7 -isVisible 0
+setLayerPreference allM8Cont -isVisible 0
+setLayerPreference allM8 -isVisible 0
+setLayerPreference allM0 -isVisible 1
+setLayerPreference allM1Cont -isVisible 1
+setLayerPreference allM1 -isVisible 1
+setLayerPreference allM2Cont -isVisible 1
+setLayerPreference allM2 -isVisible 1
+setLayerPreference allM3Cont -isVisible 1
+setLayerPreference allM3 -isVisible 1
+setLayerPreference allM4Cont -isVisible 1
+setLayerPreference allM4 -isVisible 1
+setLayerPreference allM5Cont -isVisible 1
+setLayerPreference allM5 -isVisible 1
+setLayerPreference allM6Cont -isVisible 1
+setLayerPreference allM6 -isVisible 1
+setLayerPreference allM7Cont -isVisible 1
+setLayerPreference allM7 -isVisible 1
+setLayerPreference allM8Cont -isVisible 1
+setLayerPreference allM8 -isVisible 1
+setLayerPreference allM0 -isVisible 0
+setLayerPreference allM0 -isVisible 1
+setLayerPreference allM1Cont -isVisible 0
+setLayerPreference allM1Cont -isVisible 1
+setLayerPreference allM1 -isVisible 0
+setLayerPreference allM1 -isVisible 1
+setLayerPreference allM1 -isVisible 0
+setLayerPreference allM1 -isVisible 1
+setLayerPreference allM2Cont -isVisible 0
+setLayerPreference allM2Cont -isVisible 1
+setLayerPreference allM2 -isVisible 0
+setLayerPreference allM2 -isVisible 1
+setLayerPreference allM2 -isVisible 0
+setLayerPreference allM2 -isVisible 1
+setLayerPreference allM2 -isVisible 0
+setLayerPreference allM2 -isVisible 1
+setLayerPreference allM3Cont -isVisible 0
+setLayerPreference allM3Cont -isVisible 1
+setLayerPreference allM3 -isVisible 0
+setLayerPreference allM3 -isVisible 1
+setLayerPreference allM3 -isVisible 0
+setLayerPreference allM3 -isVisible 1
+setLayerPreference allM4Cont -isVisible 0
+setLayerPreference allM4Cont -isVisible 1
+setLayerPreference allM4 -isVisible 0
+setLayerPreference allM4 -isVisible 1
+setLayerPreference allM4 -isVisible 0
+setLayerPreference allM4 -isVisible 1
+setLayerPreference allM5Cont -isVisible 0
+setLayerPreference allM5Cont -isVisible 1
+setLayerPreference allM5 -isVisible 0
+setLayerPreference allM5 -isVisible 1
+setLayerPreference allM5 -isVisible 0
+setLayerPreference allM5 -isVisible 1
+setLayerPreference allM6Cont -isVisible 0
+setLayerPreference allM6Cont -isVisible 1
+setLayerPreference allM6 -isVisible 0
+setLayerPreference allM6 -isVisible 1
+setLayerPreference allM6 -isVisible 0
+setLayerPreference allM6 -isVisible 1
+setLayerPreference allM6 -isVisible 0
+setLayerPreference allM6 -isVisible 1
+setLayerPreference allM7Cont -isVisible 0
+setLayerPreference allM7Cont -isVisible 1
+setLayerPreference allM7 -isVisible 0
+setLayerPreference allM7 -isVisible 1
+setLayerPreference allM7 -isVisible 0
+setLayerPreference allM7 -isVisible 1
+setLayerPreference allM7 -isVisible 0
+setLayerPreference allM7 -isVisible 1
+setLayerPreference allM8Cont -isVisible 0
+setLayerPreference allM8Cont -isVisible 1
+setLayerPreference bump -isVisible 0
+setLayerPreference bumpBack -isVisible 0
+setLayerPreference bumpConnect -isVisible 0
+setLayerPreference allM8 -isVisible 0
+setLayerPreference bump -isVisible 1
+setLayerPreference bumpBack -isVisible 1
+setLayerPreference bumpConnect -isVisible 1
+setLayerPreference allM8 -isVisible 1
+verifyConnectivity

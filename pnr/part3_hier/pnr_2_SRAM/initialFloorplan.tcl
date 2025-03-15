@@ -1,7 +1,7 @@
 # Floorplan
-floorPlan -site core -s 2000 2000 10.0 10.0 10.0 10.0
+#floorPlan -site core -s 500 1000 10.0 10.0 10.0 10.0
 
-#floorPlan -site core -r 1 0.50 10.0 10.0 10.0 10.0
+floorPlan -site core -r 1 0.50 10.0 10.0 10.0 10.0
 globalNetConnect VDD -type pgpin -pin VDD -inst * -verbose
 globalNetConnect VSS -type pgpin -pin VSS -inst * -verbose
 
@@ -10,14 +10,14 @@ addRing -spacing {top 1 bottom 1 left 1 right 1} -width {top 2 bottom 2 left 2 r
 setAddStripeMode -break_at {block_ring}
 
 ### Note: Change the number of strip  by looking at the layout #########
-addStripe -number_of_sets 20  -spacing 4 -layer M5 -width 2 -nets { VSS VDD } -direction horizontal -start 30 -stop 600
+addStripe -number_of_sets 15  -spacing 2 -layer M5 -width 1 -nets { VSS VDD } -direction horizontal -start 30 -stop 600
 #################################################
 
 
 
-setObjFPlanBox Instance qmem_instance 100 100 600 600
-setObjFPlanBox Instance kmem_instance 100 800 600 1300
-setObjFPlanBox Instance psum_mem_instance 100 1400 600 1900 
+setObjFPlanBox Instance kmem_instance 50 200 250 375
+setObjFPlanBox Instance qmem_instance 50 400 250 600
+setObjFPlanBox Instance psum_mem_instance 350 25 550 225 
 
 
 #addHaloToBlock {3 3 3 3} qmem_instance
@@ -31,7 +31,9 @@ addRing -nets {VDD VSS} -type block_rings -around each_block -layer {top M1 bott
 
 globalNetConnect VDD -type pgpin -pin VDD -sinst qmem_instance -verbose -override
 globalNetConnect VSS -type pgpin -pin VSS -sinst kmem_instance -verbose -override        
-globalNetConnect VSS -type pgpin -pin VSS -sinst psum_mem_instance -verbose -override        
+globalNetConnect VSS -type pgpin -pin VSS -sinst psum_mem_instance -verbose -override    
+
+
 
 sroute 
 

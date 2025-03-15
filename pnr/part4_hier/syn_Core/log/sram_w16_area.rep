@@ -1,0 +1,50 @@
+ 
+****************************************
+Report : reference
+Design : sram_w16
+Version: K-2015.06-SP2
+Date   : Thu Mar  6 21:09:34 2025
+****************************************
+
+Attributes:
+    b - black box (unknown)
+   bo - allows boundary optimization
+    d - dont_touch
+   mo - map_only
+    h - hierarchical
+    n - noncombinational
+    r - removable
+    s - synthetic operator
+    u - contains unmapped logic
+
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AOI22D0            tcbn65gpluswc
+                                  2.520000     512   1290.239990  
+BUFFD0             tcbn65gpluswc
+                                  1.440000      15     21.600001  
+BUFFD1             tcbn65gpluswc
+                                  1.440000      29     41.760002  
+CKBD1              tcbn65gpluswc
+                                  1.440000       6      8.640000  
+CKND2D0            tcbn65gpluswc
+                                  1.440000       2      2.880000  
+EDFQD1             tcbn65gpluswc
+                                  9.360000    1152  10782.719604  n
+INR2XD0            tcbn65gpluswc
+                                  2.160000       9     19.440001  
+INVD0              tcbn65gpluswc
+                                  1.080000       2      2.160000  
+ND4D0              tcbn65gpluswc
+                                  2.520000     128    322.559998  
+NR2D0              tcbn65gpluswc
+                                  1.440000       3      4.320000  
+NR2XD0             tcbn65gpluswc
+                                  1.440000       3      4.320000  
+NR3D0              tcbn65gpluswc
+                                  2.160000       2      4.320000  
+OR2D0              tcbn65gpluswc
+                                  2.160000       2      4.320000  
+-----------------------------------------------------------------------------
+Total 13 references                                 12509.279597
+1

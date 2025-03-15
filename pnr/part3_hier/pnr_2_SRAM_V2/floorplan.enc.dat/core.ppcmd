@@ -1,0 +1,106 @@
+# PPCMD 1 
+# sroute 
+# 5 
+# 16 
+# 0 
+# 0 
+# 0 
+# 0 
+# BOX_LIST 
+# END_BOX_LIST 
+# NET_INFO_LIST 
+# END_NET_INFO_LIST 
+# END_PPCMD 1 
+
+# PPCMD 2 
+# addRing -nets {VDD VSS} -type block_rings -around each_block -layer {top M1 bottom M1 left M2 right M2} -width {top 3 bottom 3 left 3 right 3} -spacing {top 5 bottom 5 left 5 right 5}
+# 4 
+# 8 
+# 1 
+# 0 
+# 0 
+# 0 
+# BOX_LIST 
+# END_BOX_LIST 
+# NET_INFO_LIST 
+# VSS 6000 1 1 0 0 0 0 0 
+# RING_PT_INFO_LIST 
+# 261800 379000 861800 388200 261800 738200 261800 779000 
+# END_RING_PT_INFO_LIST 
+# VSS 6000 2 1 0 0 0 0 0 
+# RING_PT_INFO_LIST 
+# 679000 201100 1044600 201100 79000 558600 444600 558600 79000 965900 444600 965900 
+# END_RING_PT_INFO_LIST 
+# VDD 6000 1 1 0 0 0 0 0 
+# RING_PT_INFO_LIST 
+# 861800 372200 261800 395000 261800 722200 261800 795000 
+# END_RING_PT_INFO_LIST 
+# VDD 6000 2 1 0 0 0 0 0 
+# RING_PT_INFO_LIST 
+# 695000 190100 1028600 190100 95000 558600 428600 558600 95000 976900 428600 976900 
+# END_RING_PT_INFO_LIST 
+# END_NET_INFO_LIST 
+# END_PPCMD 2 
+
+# PPCMD 3 
+# addStripe -number_of_sets 15 -spacing 2 -layer M5 -width 1 -nets { VSS VDD } -direction horizontal -start 30 -stop 600
+# 3 
+# 2 
+# 1 
+# 0 
+# 0 
+# 2 
+# BOX_LIST 
+# 5000 9000 1159000 1161800 0 
+# 11000 15000 1153000 1155800 0 
+# END_BOX_LIST 
+# NET_INFO_LIST 
+# VDD 2000 5 0 66000 1201000 80850 0 0 
+# VSS 2000 5 0 60000 1201000 80850 0 0 
+# END_NET_INFO_LIST 
+# END_PPCMD 3 
+
+# PPCMD 4 
+# setAddStripeMode -break_at block_ring
+# 2 
+# 0 
+# 0 
+# 0 
+# 0 
+# 0 
+# BOX_LIST 
+# END_BOX_LIST 
+# NET_INFO_LIST 
+# END_NET_INFO_LIST 
+# END_PPCMD 4 
+
+# PPCMD 5 
+# addRing -spacing {top 1 bottom 1 left 1 right 1} -width {top 2 bottom 2 left 2 right 2} -layer {top M1 bottom M1 left M2 right M2} -center 1 -type core_rings -nets {VSS  VDD}
+# 1 
+# 32 
+# 1 
+# 0 
+# 0 
+# 0 
+# BOX_LIST 
+# END_BOX_LIST 
+# NET_INFO_LIST 
+# VDD 4000 1 1 0 0 0 0 0 
+# RING_PT_INFO_LIST 
+# 584000 7000 584000 1159800 
+# END_RING_PT_INFO_LIST 
+# VDD 4000 2 1 0 0 0 0 0 
+# RING_PT_INFO_LIST 
+# 7000 583400 1161000 583400 
+# END_RING_PT_INFO_LIST 
+# VSS 4000 1 1 0 0 0 0 0 
+# RING_PT_INFO_LIST 
+# 584000 13000 584000 1153800 
+# END_RING_PT_INFO_LIST 
+# VSS 4000 2 1 0 0 0 0 0 
+# RING_PT_INFO_LIST 
+# 13000 583400 1155000 583400 
+# END_RING_PT_INFO_LIST 
+# END_NET_INFO_LIST 
+# END_PPCMD 5 
+

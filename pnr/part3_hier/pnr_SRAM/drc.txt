@@ -1,0 +1,14 @@
+ *** Starting Verify DRC (MEM: 1182.1) ***
+
+  VERIFY DRC ...... Starting Verification
+  VERIFY DRC ...... Initializing
+  VERIFY DRC ...... Deleting Existing Violations
+  VERIFY DRC ...... Creating Sub-Areas
+  VERIFY DRC ...... Using new threading
+  VERIFY DRC ...... Sub-Area : 1 of 1
+**WARN: (IMPVFG-1103):	VERIFY DRC did not complete: Number of violations exceeds the Error Limit [1000]
+
+  Verification Complete : 1000 Viols.
+
+ *** End Verify DRC (CPU: 0:00:01.8  ELAPSED TIME: 2.00  MEM: 1.5M) ***
+

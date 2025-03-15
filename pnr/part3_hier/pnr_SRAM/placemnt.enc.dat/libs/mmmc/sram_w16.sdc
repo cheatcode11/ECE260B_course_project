@@ -1,1 +1,0 @@
-/home/linux/ieng6/ee260bwi25/ttalapaneni/ECE260B_course_project/PnR_Synthesis/Part3_Hier_Syn/pnr_SRAM/constraints/sram_w16.sdc
