@@ -19,15 +19,13 @@ output [1:0] o_inst; // [1]: execute, [0]: load
 output fifo_wr;
 output [pr-1:0] q_zero_out;
 input [pr-1:0] q_zero;
-//input [pr-1:0] k_zero;
+
 
 reg    load_ready_q;
 reg    [3:0] cnt_q;
 reg    [1:0] inst_q;
 reg    [1:0] inst_2q;
 
-//reg   signed [pr*bw-1:0] query_q;
-//reg   signed [pr*bw-1:0] key_q;
 
 wire signed [bw-1:0] query_q_0;
 wire signed [bw-1:0] query_q_1;
@@ -99,31 +97,7 @@ wire clk_gate_4;
 wire clk_gate_5;
 wire clk_gate_6;
 wire clk_gate_7;
-/*
-clk_gate CLK_GATE_0(.clk(clk), .en(~q_zero[0]), .gated_clk(clk_gate_0));
-ff QUERY_Q_0(.clk(clk_gate_0), .in(q_in[bw*1-1:bw*0]), .out(query_q_0), .rst(reset) );
 
-clk_gate CLK_GATE_1(.clk(clk), .en(~q_zero[1]), .gated_clk(clk_gate_1));
-ff QUERY_Q_1(.clk(clk_gate_1), .in(q_in[bw*2-1:bw*1]), .out(query_q_1), .rst(reset) );
-
-clk_gate CLK_GATE_2(.clk(clk), .en(~q_zero[2]), .gated_clk(clk_gate_2));
-ff QUERY_Q_2(.clk(clk_gate_2), .in(q_in[bw*3-1:bw*2]), .out(query_q_2), .rst(reset) );
-
-clk_gate CLK_GATE_3(.clk(clk), .en(~q_zero[3]), .gated_clk(clk_gate_3));
-ff QUERY_Q_3(.clk(clk_gate_3), .in(q_in[bw*4-1:bw*3]), .out(query_q_3), .rst(reset) );
-
-clk_gate CLK_GATE_4(.clk(clk), .en(~q_zero[4]), .gated_clk(clk_gate_4));
-ff QUERY_Q_4(.clk(clk_gate_4), .in(q_in[bw*5-1:bw*4]), .out(query_q_4), .rst(reset) );
-
-clk_gate CLK_GATE_5(.clk(clk), .en(~q_zero[5]), .gated_clk(clk_gate_5));
-ff QUERY_Q_5(.clk(clk_gate_5), .in(q_in[bw*6-1:bw*5]), .out(query_q_5), .rst(reset) );
-
-clk_gate CLK_GATE_6(.clk(clk), .en(~q_zero[6]), .gated_clk(clk_gate_6));
-ff QUERY_Q_6(.clk(clk_gate_6), .in(q_in[bw*7-1:bw*6]), .out(query_q_6), .rst(reset) );
-
-clk_gate CLK_GATE_7(.clk(clk), .en(~q_zero[7]), .gated_clk(clk_gate_7));
-ff QUERY_Q_7(.clk(clk_gate_7), .in(q_in[bw*8-1:bw*7]), .out(query_q_7), .rst(reset) );
-*/
 
 clk_gate CLK_GATE_0(.clk(clk), .en(~q_zero_reg[0]), .gated_clk(clk_gate_0));
 ff QUERY_Q_0(.clk(clk_gate_0), .in(q_in[bw*1-1:bw*0]), .out(query_q_0), .rst(reset) );
@@ -150,31 +124,6 @@ clk_gate CLK_GATE_7(.clk(clk), .en(~q_zero_reg[7]), .gated_clk(clk_gate_7));
 ff QUERY_Q_7(.clk(clk_gate_7), .in(q_in[bw*8-1:bw*7]), .out(query_q_7), .rst(reset) );
 
 
-/*
-clk_gate CLK_GATE_0(.clk(clk), .en(1), .gated_clk(clk_gate_0));
-ff QUERY_Q_0(.clk(clk_gate_0), .in(q_in[bw*1-1:bw*0]), .out(query_q_0), .rst(reset) );
-
-clk_gate CLK_GATE_1(.clk(clk), .en(1), .gated_clk(clk_gate_1));
-ff QUERY_Q_1(.clk(clk_gate_1), .in(q_in[bw*2-1:bw*1]), .out(query_q_1), .rst(reset) );
-
-clk_gate CLK_GATE_2(.clk(clk), .en(1), .gated_clk(clk_gate_2));
-ff QUERY_Q_2(.clk(clk_gate_2), .in(q_in[bw*3-1:bw*2]), .out(query_q_2), .rst(reset) );
-
-clk_gate CLK_GATE_3(.clk(clk), .en(1), .gated_clk(clk_gate_3));
-ff QUERY_Q_3(.clk(clk_gate_3), .in(q_in[bw*4-1:bw*3]), .out(query_q_3), .rst(reset) );
-
-clk_gate CLK_GATE_4(.clk(clk), .en(1), .gated_clk(clk_gate_4));
-ff QUERY_Q_4(.clk(clk_gate_4), .in(q_in[bw*5-1:bw*4]), .out(query_q_4), .rst(reset) );
-
-clk_gate CLK_GATE_5(.clk(clk), .en(1), .gated_clk(clk_gate_5));
-ff QUERY_Q_5(.clk(clk_gate_5), .in(q_in[bw*6-1:bw*5]), .out(query_q_5), .rst(reset) );
-
-clk_gate CLK_GATE_6(.clk(clk), .en(1), .gated_clk(clk_gate_6));
-ff QUERY_Q_6(.clk(clk_gate_6), .in(q_in[bw*7-1:bw*6]), .out(query_q_6), .rst(reset) );
-
-clk_gate CLK_GATE_7(.clk(clk), .en(1), .gated_clk(clk_gate_7));
-ff QUERY_Q_7(.clk(clk_gate_7), .in(q_in[bw*8-1:bw*7]), .out(query_q_7), .rst(reset) );
-*/
 
 always @ (posedge clk) begin
   if (reset) begin
@@ -191,16 +140,6 @@ always @ (posedge clk) begin
 
     if (inst_q[0]) begin
 
-	      //  query_q_0 <= q_in[bw*1-1:bw*0];
-      //  query_q_1 <= q_in[bw*2-1:bw*1];
-      //  query_q_2 <= q_in[bw*3-1:bw*2];
-      //  query_q_3 <= q_in[bw*4-1:bw*3];
-      //  query_q_4 <= q_in[bw*5-1:bw*4];
-      //  query_q_5 <= q_in[bw*6-1:bw*5];
-      //  query_q_6 <= q_in[bw*7-1:bw*6];
-      //  query_q_7 <= q_in[bw*8-1:bw*7];
-
-
        if (cnt_q == 9-col_id)begin
          cnt_q <= 0;
 
@@ -213,16 +152,6 @@ always @ (posedge clk) begin
          key_q_6 <= q_in[bw*7-1:bw*6];
 	 key_q_7 <= q_in[bw*8-1:bw*7];
 
-
-	 //k_zero_reg[0] <= q_zero[0];
-	 //k_zero_reg[1] <= q_zero[1];
-	 //k_zero_reg[2] <= q_zero[2];
-	 //k_zero_reg[3] <= q_zero[3];
-	 //k_zero_reg[4] <= q_zero[4];
-	 //k_zero_reg[5] <= q_zero[5];
-	 //k_zero_reg[6] <= q_zero[6];
-	 //k_zero_reg[7] <= q_zero[7];
-
 	 k_zero_reg2 <= q_zero_reg;
 
          load_ready_q <= 0;
@@ -231,36 +160,12 @@ always @ (posedge clk) begin
          cnt_q <= cnt_q + 1;
     end
     else if(inst_q[1]) begin
-      //out     <= psum;
-      //  query_q_0 <= q_in[bw*1-1:bw*0];
-      //  query_q_1 <= q_in[bw*2-1:bw*1];
-      //  query_q_2 <= q_in[bw*3-1:bw*2];
-      //  query_q_3 <= q_in[bw*4-1:bw*3];
-      //  query_q_4 <= q_in[bw*5-1:bw*4];
-      //  query_q_5 <= q_in[bw*6-1:bw*5];
-      //  query_q_6 <= q_in[bw*7-1:bw*6];
-      //  query_q_7 <= q_in[bw*8-1:bw*7];
-
-      //q_zero_reg[0] <= q_zero[0];
-      //q_zero_reg[1] <= q_zero[1];
-      //q_zero_reg[2] <= q_zero[2];
-      //q_zero_reg[3] <= q_zero[3];
-      //q_zero_reg[4] <= q_zero[4];
-      //q_zero_reg[5] <= q_zero[5];
-      //q_zero_reg[6] <= q_zero[6];
-      //q_zero_reg[7] <= q_zero[7];
       
       q_zero_reg2 <= q_zero_reg;
 
-
-
     end
-	
-      //q_zero_reg2 <= q_zero_reg;
-      //k_zero_reg2 <= k_zero_reg;
-      
-      q_zero_reg <= q_zero;
 
+      q_zero_reg <= q_zero;
 
   end
 end

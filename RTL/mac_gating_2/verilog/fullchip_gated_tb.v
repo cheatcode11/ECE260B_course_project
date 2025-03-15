@@ -367,7 +367,7 @@ $display("##### K data loading to processor #####");
 ///// execution  /////
 $display("##### execute #####");
 
-  for (q=0; q<total_cycle; q=q+1) begin
+  for (q=0; q<total_cycle+1; q=q+1) begin
     #0.5 clk = 1'b0;  
     execute = 1; 
     qmem_rd = 1;
@@ -398,7 +398,7 @@ $display("##### execute #####");
 
 $display("##### move ofifo to pmem #####");
 //Begin writing into pmem
-  for (q=0; q<total_cycle; q=q+1) begin
+  for (q=0; q<total_cycle+1; q=q+1) begin
     #0.5 clk = 1'b0;  
     ofifo_rd = 1; 
     pmem_wr = 1; 
@@ -414,8 +414,8 @@ $display("##### move ofifo to pmem #####");
      pmem_wr = 0; pmem_add = 0; ofifo_rd = 0;
      //#0.5 clk = 1'b1;
      
-     //#0.5 clk = 1'b0;
-    // #0.5 clk = 1'b1;
+     #0.5 clk = 1'b0;
+     #0.5 clk = 1'b1;
    
    //Begin reading from pmem
   for (q=0; q<total_cycle+2; q=q+1) begin
@@ -423,15 +423,15 @@ $display("##### move ofifo to pmem #####");
     //ofifo_rd = 1; 
     pmem_rd = 1; 
 
-    if (q>0) begin
+    if (q>1) begin
        pmem_add = pmem_add + 1;
        end
     
-    if (q>1) begin
-    if (out == temp16b_tbtest[q-2]) // this if condition is needed as the output is available at the next cycle
-          $display("Computed data matched :D, %40h vs.  %40h",   out, temp16b_tbtest[q-2]);
-    else begin
-          $display("Computed data ERROR (>.<),  %40h vs.  %40h",  out, temp16b_tbtest[q-2]);
+    if (q>2) begin
+    if (out == temp16b_tbtest[q-3]) // this if condition is needed as the output is available at the next cycle
+          $display("Computed data matched :D, %40h vs.  %40h",   out, temp16b_tbtest[q-3]);
+	  else begin
+          $display("Computed data ERROR (>.<),  %40h vs.  %40h",  out, temp16b_tbtest[q-3]);
           error = error+1;
     end
     $display("Total ERROR: %3d",  error);
