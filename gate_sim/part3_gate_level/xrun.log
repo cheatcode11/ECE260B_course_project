@@ -1,0 +1,399 @@
+xrun(64): 20.09-s017: (c) Copyright 1995-2021 Cadence Design Systems, Inc.
+TOOL:	xrun(64)	20.09-s017: Started on Mar 15, 2025 at 21:15:48 PDT
+xrun
+	+gui
+	+access+rwc
+	+xm64bit
+	+xmstatus
+	+xmtimescale+1ns/1ps
+	+xmoveride_timescale
+	-v ./netlist/core.pnr.v
+	-v /home/linux/ieng6/ee260bwi25/public/PDKdata/verilog/tcbn65gplus.v
+	./netlist/core_tb.v
+
+   User defined plus("+") options:
+	+xmoveride_timescale
+
+file: ./netlist/core_tb.v
+	module worklib.core_tb:v
+		errors: 0, warnings: 0
+file: ./netlist/core.pnr.v
+	module core.core:v
+		errors: 0, warnings: 0
+file: ./netlist/core.pnr.v
+	module core.mac_array_col8_bw8_bw_psum20_pr8:v
+		errors: 0, warnings: 0
+	module core.ofifo_col8_bw20:v
+		errors: 0, warnings: 0
+	module core.sfp_row_col8_bw8_bw_psum20:v
+		errors: 0, warnings: 0
+file: ./netlist/core.pnr.v
+	module core.mac_col_bw8_bw_psum20_pr8_col_id1:v
+		errors: 0, warnings: 0
+	module core.mac_col_bw8_bw_psum20_pr8_col_id2:v
+		errors: 0, warnings: 0
+	module core.mac_col_bw8_bw_psum20_pr8_col_id3:v
+		errors: 0, warnings: 0
+	module core.mac_col_bw8_bw_psum20_pr8_col_id4:v
+		errors: 0, warnings: 0
+	module core.mac_col_bw8_bw_psum20_pr8_col_id5:v
+		errors: 0, warnings: 0
+	module core.mac_col_bw8_bw_psum20_pr8_col_id6:v
+		errors: 0, warnings: 0
+	module core.mac_col_bw8_bw_psum20_pr8_col_id7:v
+		errors: 0, warnings: 0
+	module core.mac_col_bw8_bw_psum20_pr8_col_id8:v
+		errors: 0, warnings: 0
+	module core.fifo_depth16_bw20_simd1_7:v
+		errors: 0, warnings: 0
+	module core.fifo_depth16_bw20_simd1_6:v
+		errors: 0, warnings: 0
+	module core.fifo_depth16_bw20_simd1_0:v
+		errors: 0, warnings: 0
+	module core.fifo_depth16_bw20_simd1_1:v
+		errors: 0, warnings: 0
+	module core.fifo_depth16_bw20_simd1_2:v
+		errors: 0, warnings: 0
+	module core.fifo_depth16_bw20_simd1_3:v
+		errors: 0, warnings: 0
+	module core.fifo_depth16_bw20_simd1_4:v
+		errors: 0, warnings: 0
+	module core.fifo_depth16_bw20_simd1_5:v
+		errors: 0, warnings: 0
+file: ./netlist/core.pnr.v
+	module core.mac_16in_bw8_bw_psum20_pr8_7:v
+		errors: 0, warnings: 0
+	module core.mac_16in_bw8_bw_psum20_pr8_6:v
+		errors: 0, warnings: 0
+	module core.mac_16in_bw8_bw_psum20_pr8_5:v
+		errors: 0, warnings: 0
+	module core.mac_16in_bw8_bw_psum20_pr8_4:v
+		errors: 0, warnings: 0
+	module core.mac_16in_bw8_bw_psum20_pr8_3:v
+		errors: 0, warnings: 0
+	module core.mac_16in_bw8_bw_psum20_pr8_2:v
+		errors: 0, warnings: 0
+	module core.mac_16in_bw8_bw_psum20_pr8_1:v
+		errors: 0, warnings: 0
+	module core.mac_16in_bw8_bw_psum20_pr8_0:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_8_1_bw20_simd1_7:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_8_1_bw20_simd1_6:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_8_1_bw20_simd1_0:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_8_1_bw20_simd1_1:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_8_1_bw20_simd1_2:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_8_1_bw20_simd1_3:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_8_1_bw20_simd1_4:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_8_1_bw20_simd1_5:v
+		errors: 0, warnings: 0
+file: ./netlist/core.pnr.v
+	module core.fifo_mux_2_1_bw20_simd1_55:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_49:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_50:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_51:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_52:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_53:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_54:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_42:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_43:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_44:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_45:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_46:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_47:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_48:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_0:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_1:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_2:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_3:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_4:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_5:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_6:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_7:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_8:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_9:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_10:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_11:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_12:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_13:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_14:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_15:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_16:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_17:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_18:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_19:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_20:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_21:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_22:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_23:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_24:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_25:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_26:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_27:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_28:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_29:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_30:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_31:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_32:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_33:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_34:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_35:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_36:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_37:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_38:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_39:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_40:v
+		errors: 0, warnings: 0
+	module core.fifo_mux_2_1_bw20_simd1_41:v
+		errors: 0, warnings: 0
+file: /home/linux/ieng6/ee260bwi25/public/PDKdata/verilog/tcbn65gplus.v
+	module tcbn65gplus.AN2D8:v
+		errors: 0, warnings: 0
+	module tcbn65gplus.AN3D4:v
+		errors: 0, warnings: 0
+	module tcbn65gplus.AOI221D2:v
+		errors: 0, warnings: 0
+	module tcbn65gplus.AOI31D4:v
+		errors: 0, warnings: 0
+	module tcbn65gplus.CKXOR2D0:v
+		errors: 0, warnings: 0
+	module tcbn65gplus.DFD4:v
+		errors: 0, warnings: 0
+	module tcbn65gplus.FCICIND1:v
+		errors: 0, warnings: 0
+	module tcbn65gplus.IAO22D0:v
+		errors: 0, warnings: 0
+	module tcbn65gplus.IIND4D1:v
+		errors: 0, warnings: 0
+	module tcbn65gplus.IINR4D1:v
+		errors: 0, warnings: 0
+	module tcbn65gplus.INR3D4:v
+		errors: 0, warnings: 0
+	module tcbn65gplus.INR4D0:v
+		errors: 0, warnings: 0
+	module tcbn65gplus.INR4D2:v
+		errors: 0, warnings: 0
+	module tcbn65gplus.MAOI222D0:v
+		errors: 0, warnings: 0
+	module tcbn65gplus.MAOI222D1:v
+		errors: 0, warnings: 0
+	module tcbn65gplus.MUX2ND1:v
+		errors: 0, warnings: 0
+	module tcbn65gplus.MUX2ND4:v
+		errors: 0, warnings: 0
+	module tcbn65gplus.MUX4ND1:v
+		errors: 0, warnings: 0
+	module tcbn65gplus.NR3D3:v
+		errors: 0, warnings: 0
+	module tcbn65gplus.NR3D4:v
+		errors: 0, warnings: 0
+	module tcbn65gplus.NR3D8:v
+		errors: 0, warnings: 0
+	module tcbn65gplus.NR4D2:v
+		errors: 0, warnings: 0
+	module tcbn65gplus.OA211D2:v
+		errors: 0, warnings: 0
+	module tcbn65gplus.OAI211D4:v
+		errors: 0, warnings: 0
+	module tcbn65gplus.OAI221XD4:v
+		errors: 0, warnings: 0
+	module tcbn65gplus.OAI222D2:v
+		errors: 0, warnings: 0
+	module tcbn65gplus.OAI31D1:v
+		errors: 0, warnings: 0
+	module tcbn65gplus.OAI31D2:v
+		errors: 0, warnings: 0
+	module tcbn65gplus.OAI32D2:v
+		errors: 0, warnings: 0
+	module tcbn65gplus.OR3D1:v
+		errors: 0, warnings: 0
+	module tcbn65gplus.OR3D8:v
+		errors: 0, warnings: 0
+	module tcbn65gplus.OR3XD1:v
+		errors: 0, warnings: 0
+	module tcbn65gplus.XNR3D1:v
+		errors: 0, warnings: 0
+xmvlog: Memory Usage - Current physical: 23.3M, Current virtual: 93.8M
+xmvlog: CPU Usage - 0.1s system + 1.1s user = 1.2s total (1.3s, 94.6% cpu)
+		Caching library 'worklib' ....... Done
+		Caching library 'core' ....... Done
+		Caching library 'tcbn65gplus' ....... Done
+	Elaborating the design hierarchy:
+core #(.bw(bw), .bw_psum(bw_psum), .col(col), .pr(pr))  core_instance (
+            |
+xmelab: *E,CUTMIP (./netlist/core_tb.v,81|12): Too many module instance parameter assignments (definition in file ./netlist/core.pnr.v, line 109834).
+   FA1D1 U403 (.A(n1133),
+            |
+xmelab: *W,CUVWSP (./netlist/core.pnr.v,5295|12): 1 output port was not connected:
+xmelab: (/home/linux/ieng6/ee260bwi25/public/PDKdata/verilog/tcbn65gplus.v,9795): CO
+
+   DFD2 cnt_q_reg_2_ (.CP(clk_clone1),
+                   |
+xmelab: *W,CUVWSP (./netlist/core.pnr.v,9086|19): 1 output port was not connected:
+xmelab: (/home/linux/ieng6/ee260bwi25/public/PDKdata/verilog/tcbn65gplus.v,5860): Q
+
+   DFD1 cnt_q_reg_0_ (.CP(clk),
+                   |
+xmelab: *W,CUVWSP (./netlist/core.pnr.v,18478|19): 1 output port was not connected:
+xmelab: (/home/linux/ieng6/ee260bwi25/public/PDKdata/verilog/tcbn65gplus.v,5821): Q
+
+   FA1D1 U330 (.A(n454),
+            |
+xmelab: *W,CUVWSP (./netlist/core.pnr.v,25037|12): 1 output port was not connected:
+xmelab: (/home/linux/ieng6/ee260bwi25/public/PDKdata/verilog/tcbn65gplus.v,9795): CO
+
+   DFD4 cnt_q_reg_0_ (.CP(clk_clone4),
+                   |
+xmelab: *W,CUVWSP (./netlist/core.pnr.v,28793|19): 1 output port was not connected:
+xmelab: (/home/linux/ieng6/ee260bwi25/public/PDKdata/verilog/tcbn65gplus.v,5899): Q
+
+   DFD1 cnt_q_reg_0_ (.CP(clk),
+                   |
+xmelab: *W,CUVWSP (./netlist/core.pnr.v,38954|19): 1 output port was not connected:
+xmelab: (/home/linux/ieng6/ee260bwi25/public/PDKdata/verilog/tcbn65gplus.v,5821): Q
+
+   FA1D1 U32 (.A(n1156),
+           |
+xmelab: *W,CUVWSP (./netlist/core.pnr.v,53751|11): 1 output port was not connected:
+xmelab: (/home/linux/ieng6/ee260bwi25/public/PDKdata/verilog/tcbn65gplus.v,9795): CO
+
+   DFD1 cnt_q_reg_0_ (.CP(clk_clone1),
+                   |
+xmelab: *W,CUVWSP (./netlist/core.pnr.v,58401|19): 1 output port was not connected:
+xmelab: (/home/linux/ieng6/ee260bwi25/public/PDKdata/verilog/tcbn65gplus.v,5821): Q
+
+   DFD1 cnt_q_reg_3_ (.CP(clk_clone1),
+                   |
+xmelab: *W,CUVWSP (./netlist/core.pnr.v,58492|19): 1 output port was not connected:
+xmelab: (/home/linux/ieng6/ee260bwi25/public/PDKdata/verilog/tcbn65gplus.v,5821): QN
+
+   ofifo_col8_bw20 ofifo_inst (.clk(clk),
+                            |
+xmelab: *W,CUVWSP (./netlist/core.pnr.v,111379|28): 2 output ports were not connected:
+xmelab: (./netlist/core.pnr.v,86213): o_valid
+xmelab: (./netlist/core.pnr.v,86215): o_full
+
+   fifo_depth16_bw20_simd1_7 col_idx_0__fifo_instance (.in({ in[19],
+                                                    |
+xmelab: *W,CUVWSP (./netlist/core.pnr.v,86360|52): 2 output ports were not connected:
+xmelab: (./netlist/core.pnr.v,69627): o_full
+xmelab: (./netlist/core.pnr.v,69628): o_empty
+
+   fifo_depth16_bw20_simd1_6 col_idx_1__fifo_instance (.in({ in[39],
+                                                    |
+xmelab: *W,CUVWSP (./netlist/core.pnr.v,86406|52): 2 output ports were not connected:
+xmelab: (./netlist/core.pnr.v,72192): o_full
+xmelab: (./netlist/core.pnr.v,72193): o_empty
+
+   fifo_depth16_bw20_simd1_5 col_idx_2__fifo_instance (.in({ in[59],
+                                                    |
+xmelab: *W,CUVWSP (./netlist/core.pnr.v,86454|52): 2 output ports were not connected:
+xmelab: (./netlist/core.pnr.v,84578): o_full
+xmelab: (./netlist/core.pnr.v,84579): o_empty
+
+   fifo_depth16_bw20_simd1_4 col_idx_3__fifo_instance (.in({ in[79],
+                                                    |
+xmelab: *W,CUVWSP (./netlist/core.pnr.v,86503|52): 2 output ports were not connected:
+xmelab: (./netlist/core.pnr.v,81940): o_full
+xmelab: (./netlist/core.pnr.v,81941): o_empty
+
+   fifo_depth16_bw20_simd1_3 col_idx_4__fifo_instance (.in({ in[99],
+                                                    |
+xmelab: *W,CUVWSP (./netlist/core.pnr.v,86552|52): 2 output ports were not connected:
+xmelab: (./netlist/core.pnr.v,79320): o_full
+xmelab: (./netlist/core.pnr.v,79321): o_empty
+
+   fifo_depth16_bw20_simd1_2 col_idx_5__fifo_instance (.rd_clk(CTS_20),
+                                                    |
+xmelab: *W,CUVWSP (./netlist/core.pnr.v,86600|52): 2 output ports were not connected:
+xmelab: (./netlist/core.pnr.v,76670): o_full
+xmelab: (./netlist/core.pnr.v,76671): o_empty
+
+   fifo_depth16_bw20_simd1_1 col_idx_6__fifo_instance (.in({ in[139],
+                                                    |
+xmelab: *W,CUVWSP (./netlist/core.pnr.v,86648|52): 2 output ports were not connected:
+xmelab: (./netlist/core.pnr.v,74747): o_full
+xmelab: (./netlist/core.pnr.v,74748): o_empty
+
+   fifo_depth16_bw20_simd1_0 col_idx_7__fifo_instance (.rd_clk(clk),
+                                                    |
+xmelab: *W,CUVWSP (./netlist/core.pnr.v,86693|52): 2 output ports were not connected:
+xmelab: (./netlist/core.pnr.v,73968): o_full
+xmelab: (./netlist/core.pnr.v,73969): o_empty
+
+		Caching library 'core' ....... Done
+		Caching library 'worklib' ....... Done
+		Caching library 'tcbn65gplus' ....... Done
+   sram_w16 qmem_instance (.A({ inst[14],
+                        |
+xmelab: *E,CUVMUR (./netlist/core.pnr.v,111558|24): instance 'core_tb.core_instance@core<module>.qmem_instance' of design unit 'sram_w16' is unresolved in 'core.core:v'.
+   sram_w16 kmem_instance (.A({ inst[14],
+                        |
+xmelab: *E,CUVMUR (./netlist/core.pnr.v,111694|24): instance 'core_tb.core_instance@core<module>.kmem_instance' of design unit 'sram_w16' is unresolved in 'core.core:v'.
+   sram_w16 psum_mem_instance (.A({ inst[10],
+                            |
+xmelab: *E,CUVMUR (./netlist/core.pnr.v,111830|28): instance 'core_tb.core_instance@core<module>.psum_mem_instance' of design unit 'sram_w16' is unresolved in 'core.core:v'.
+xmelab: Memory Usage - Final: 41.0M, Peak: 41.0M, Peak virtual: 169.1M
+xmelab: CPU Usage - 0.0s system + 0.1s user = 0.1s total (0.2s, 91.5% cpu)
+xrun: *E,ELBERR: Error during elaboration (status 1), exiting.
+TOOL:	xrun(64)	20.09-s017: Exiting on Mar 15, 2025 at 21:15:50 PDT  (total: 00:00:02)
