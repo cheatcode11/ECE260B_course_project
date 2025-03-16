@@ -1,5 +1,7 @@
 catch { setDesignMode -process 65 }
 catch { setAnalysisMode -analysisType bcwc }
+catch { setAnalysisMode -checkType setup }
+catch { setAnalysisMode -clkSrcPath false }
 catch { setAnalysisMode -clockPropagation forcedIdeal }
 catch { setAnalysisMode -usefulSkew true }
 catch { setOptMode -activeHoldViews { BC_VIEW } }

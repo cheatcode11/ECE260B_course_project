@@ -1,5 +1,6 @@
 catch { setDesignMode -process 65 }
 catch { setAnalysisMode -analysisType bcwc }
+catch { setAnalysisMode -checkType setup }
 catch { setAnalysisMode -clkSrcPath true }
 catch { setAnalysisMode -clockPropagation sdcControl }
 catch { setAnalysisMode -usefulSkew true }
