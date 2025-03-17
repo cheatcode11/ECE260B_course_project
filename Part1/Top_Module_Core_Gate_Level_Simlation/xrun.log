@@ -1,0 +1,338 @@
+xrun(64): 20.09-s017: (c) Copyright 1995-2021 Cadence Design Systems, Inc.
+TOOL:	xrun(64)	20.09-s017: Started on Mar 15, 2025 at 20:52:57 PDT
+xrun
+	+gui
+	+access+rwc
+	-define INITIALIZE_MEMORY
+	-xminitialize 0
+	-ncinitialize rand_2state:1
+	+xm64bit
+	+xmstatus
+	+xmtimescale+1ns/1ps
+	+xmoveride_timescale
+	+xmseq_udp_delay+20ps
+	-nowarn CUVWSP
+	-noparamerr
+	-v ./netlist/core.pnr.v
+	-v /home/linux/ieng6/ee260bwi25/public/PDKdata/verilog/tcbn65gplus.v
+	./netlist/core_tb.v
+
+   User defined plus("+") options:
+	+xmoveride_timescale
+
+xrun: *W,OPDEPRREN: Command Line Option (-ncinitialize) is deprecated. Use (-xminitialize) instead.
+xrun: *W,MLTXMIT: Multiple -xminitialize options specified, only the first value (0) will be used.
+
+-------------------------------------
+Relinquished control to SimVision...
+xcelium> 
+xcelium> source /software/ECE/XCELIUM-2009/tools/xcelium/files/xmsimrc
+xcelium> database -open waves -into waves.shm -default
+Created default SHM database waves
+xcelium> probe -create -shm core_tb.core_instance.mac_array_instance.out
+Created probe 1
+xcelium> run
+##### Q data txt reading #####
+         -1
+
+          6
+
+          1
+
+          2
+
+         -4
+
+          7
+
+         -2
+
+         -5
+
+         -3
+
+          4
+
+          1
+
+         -3
+
+         -4
+
+         -1
+
+         -4
+
+         -4
+
+          0
+
+          5
+
+          2
+
+          0
+
+         -3
+
+          3
+
+          6
+
+         -4
+
+          6
+
+          2
+
+          1
+
+          6
+
+         -8
+
+          5
+
+         -2
+
+          6
+
+          2
+
+          1
+
+         -3
+
+          4
+
+         -2
+
+         -1
+
+         -2
+
+         -6
+
+         -1
+
+          4
+
+          0
+
+          2
+
+          5
+
+         -7
+
+         -1
+
+          3
+
+          2
+
+          1
+
+         -7
+
+          6
+
+          5
+
+         -8
+
+         -3
+
+          6
+
+          0
+
+         -2
+
+          6
+
+         -1
+
+         -1
+
+         -1
+
+         -1
+
+         -1
+
+##### K data txt reading #####
+#####          -5
+
+#####           1
+
+#####           0
+
+#####           7
+
+#####           0
+
+#####          -5
+
+#####          -8
+
+#####           0
+
+#####           6
+
+#####           0
+
+#####          -5
+
+#####          -7
+
+#####           4
+
+#####          -7
+
+#####          -6
+
+#####           3
+
+#####           7
+
+#####           7
+
+#####           6
+
+#####           6
+
+#####          -3
+
+#####           0
+
+#####           0
+
+#####          -7
+
+#####           6
+
+#####           3
+
+#####           4
+
+#####           7
+
+#####           6
+
+#####          -3
+
+#####           4
+
+#####          -7
+
+#####          -4
+
+#####          -3
+
+#####          -2
+
+#####          -5
+
+#####           0
+
+#####          -7
+
+#####           3
+
+#####           3
+
+#####          -2
+
+#####           6
+
+#####           4
+
+#####          -1
+
+#####           7
+
+#####          -5
+
+#####           2
+
+#####           1
+
+#####           3
+
+#####           6
+
+#####           1
+
+#####          -5
+
+#####           3
+
+#####          -1
+
+#####           6
+
+#####           3
+
+#####          -6
+
+#####          -2
+
+#####           1
+
+#####          -4
+
+#####          -4
+
+#####          -4
+
+#####          -4
+
+#####          -4
+
+##### Estimated multiplication result #####
+prd @cycle 0: 00006fffa3000640000cfffa0fffe0fffea00003
+prd @cycle 1: 000230000100023fffe0ffffc00002ffff00004b
+prd @cycle 2: fffc6fffa50005400030fffde0000a0002cffff0
+prd @cycle 3: 00005fffd000050fffe7fffabfffaffffeafffbd
+prd @cycle 4: 00028ffff80004b00038fffd6fffdffffd20000b
+prd @cycle 5: 0004200040ffffd0002e000250005f00024ffff6
+prd @cycle 6: 0006100075fffd60001d000260002bffffefffd3
+prd @cycle 7: 00004fffef0001a0000b0000000008ffff40001e
+##### Qmem writing  #####
+##### Kmem writing #####
+##### K data loading to processor #####
+##### execute #####
+##### move ofifo to pmem #####
+Computed data matched :D, 00006fffa3000640000cfffa0fffe0fffea00003 vs.  00006fffa3000640000cfffa0fffe0fffea00003
+Total ERROR:   0
+Computed data matched :D, 000230000100023fffe0ffffc00002ffff00004b vs.  000230000100023fffe0ffffc00002ffff00004b
+Total ERROR:   0
+Computed data matched :D, fffc6fffa50005400030fffde0000a0002cffff0 vs.  fffc6fffa50005400030fffde0000a0002cffff0
+Total ERROR:   0
+Computed data matched :D, 00005fffd000050fffe7fffabfffaffffeafffbd vs.  00005fffd000050fffe7fffabfffaffffeafffbd
+Total ERROR:   0
+Computed data matched :D, 00028ffff80004b00038fffd6fffdffffd20000b vs.  00028ffff80004b00038fffd6fffdffffd20000b
+Total ERROR:   0
+Computed data matched :D, 0004200040ffffd0002e000250005f00024ffff6 vs.  0004200040ffffd0002e000250005f00024ffff6
+Total ERROR:   0
+Computed data matched :D, 0006100075fffd60001d000260002bffffefffd3 vs.  0006100075fffd60001d000260002bffffefffd3
+Total ERROR:   0
+Computed data ERROR (>.<),  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx vs.  00004fffef0001a0000b0000000008ffff40001e
+Total ERROR:   1
+prd @cycle 0: 00006fffa3000640000cfffa0fffe0fffea00003
+prd @cycle 1: 000230000100023fffe0ffffc00002ffff00004b
+prd @cycle 2: fffc6fffa50005400030fffde0000a0002cffff0
+prd @cycle 3: 00005fffd000050fffe7fffabfffaffffeafffbd
+prd @cycle 4: 00028ffff80004b00038fffd6fffdffffd20000b
+prd @cycle 5: 0004200040ffffd0002e000250005f00024ffff6
+prd @cycle 6: 0006100075fffd60001d000260002bffffefffd3
+prd @cycle 7: 00004fffef0001a0000b0000000008ffff40001e
+Simulation complete via $finish(1) at time 100 NS + 0
+./netlist/core_tb.v:473   #10 $finish;
+xcelium> ^C
+xcelium> exit
+xmsim: Memory Usage - Final: 117.2M, Peak: 120.7M, Peak virtual: 457.3M
+xmsim: Main Thread CPU Usage - 3.2s system + 2.7s user = 5.9s total
+xmsim: CPU Usage - 3.1s system + 2.4s user = 5.5s total (159.7s, 3.4% cpu)
+TOOL:	xrun(64)	20.09-s017: Exiting on Mar 15, 2025 at 20:55:37 PDT  (total: 00:02:40)

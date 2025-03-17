@@ -1,0 +1,8 @@
+//
+// File created by:  xrun
+// Do not modify this file
+
+s1::(15Mar2025:18:54:40):( xrun +gui +access+rwc -define INITIALIZE_MEMORY -xminitialize 0 -ncinitialize rand_2state:1 +xm64bit +xmstatus +xmtimescale+1ns/1ps +xmoveride_timescale +xmseq_udp_delay+20ps -nowarn CUVWSP -noparamerr -v ./netlist/core.out.v -v /home/linux/ieng6/ee260bwi25/public/PDKdata/verilog/tcbn65gplus.v ./netlist/core_tb.v )
+s2::(15Mar2025:20:06:27):( xrun +gui +access+rwc -define INITIALIZE_MEMORY -xminitialize 0 -ncinitialize rand_2state:1 +xm64bit +xmstatus +xmtimescale+1ns/1ps +xmoveride_timescale +xmseq_udp_delay+20ps -nowarn CUVWSP -noparamerr -v ./netlist/core.out.v -v /home/linux/ieng6/ee260bwi25/public/PDKdata/verilog/tcbn65gplus.v ./netlist/core_tb.v )
+s3::(15Mar2025:20:47:55):( xrun +gui +access+rwc -define INITIALIZE_MEMORY -xminitialize 0 -ncinitialize rand_2state:1 +xm64bit +xmstatus +xmtimescale+1ns/1ps +xmoveride_timescale +xmseq_udp_delay+20ps -nowarn CUVWSP -noparamerr -v ./netlist/core.pnr.v -v /home/linux/ieng6/ee260bwi25/public/PDKdata/verilog/tcbn65gplus.v ./netlist/core_tb.v )
+s4::(15Mar2025:20:52:57):( xrun +gui +access+rwc -define INITIALIZE_MEMORY -xminitialize 0 -ncinitialize rand_2state:1 +xm64bit +xmstatus +xmtimescale+1ns/1ps +xmoveride_timescale +xmseq_udp_delay+20ps -nowarn CUVWSP -noparamerr -v ./netlist/core.pnr.v -v /home/linux/ieng6/ee260bwi25/public/PDKdata/verilog/tcbn65gplus.v ./netlist/core_tb.v )

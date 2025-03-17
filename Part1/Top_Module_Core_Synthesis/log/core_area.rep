@@ -1,0 +1,68 @@
+ 
+****************************************
+Report : area
+Design : core
+Version: K-2015.06-SP2
+Date   : Sat Mar 15 18:48:43 2025
+****************************************
+
+Information: Updating design information... (UID-85)
+Warning: Design 'core' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+Library(s) Used:
+
+    tcbn65gpluswc (File: /home/linux/ieng6/ee260bwi25/public/PDKdata/db/tcbn65gpluswc.db)
+
+Number of ports:                         9110
+Number of nets:                         32618
+Number of cells:                        21731
+Number of combinational cells:          16614
+Number of sequential cells:              5024
+Number of macros/black boxes:               0
+Number of buf/inv:                       1657
+Number of references:                       8
+
+Combinational area:              61452.000059
+Buf/Inv area:                     2763.720070
+Noncombinational area:           43165.799726
+Macro/Black Box area:                0.000000
+Net Interconnect area:      undefined  (Wire load has zero net area)
+
+Total cell area:                104617.799785
+Total area:                 undefined
+1
+ 
+****************************************
+Report : reference
+Design : core
+Version: K-2015.06-SP2
+Date   : Sat Mar 15 18:48:45 2025
+****************************************
+
+Attributes:
+    b - black box (unknown)
+   bo - allows boundary optimization
+    d - dont_touch
+   mo - map_only
+    h - hierarchical
+    n - noncombinational
+    r - removable
+    s - synthetic operator
+    u - contains unmapped logic
+
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+INVD1              tcbn65gpluswc
+                                  1.080000       2      2.160000  
+MUX2D0             tcbn65gpluswc
+                                  3.240000      64    207.360001  
+NR2D0              tcbn65gpluswc
+                                  1.440000       3      4.320000  
+mac_array_col8_bw8_bw_psum20_pr8
+                              58349.520072       1  58349.520072  h, n
+ofifo_col8_bw20               17346.959744       1  17346.959744  h, n
+sram_w16_sram_bit64_0          6401.519994       1   6401.519994  h, n
+sram_w16_sram_bit64_1          6395.039994       1   6395.039994  h, n
+sram_w16_sram_bit160          15910.919981       1  15910.919981  h, n
+-----------------------------------------------------------------------------
+Total 8 references                                  104617.799785
+1

@@ -1,0 +1,198 @@
+#! /usr/bin/vvp
+:ivl_version "10.2 (stable)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "system";
+:vpi_module "vhdl_sys";
+:vpi_module "v2005_math";
+:vpi_module "va_math";
+S_0x1abf530 .scope module, "controller" "controller" 2 1;
+ .timescale 0 0;
+    .port_info 0 /INPUT 1 "clk"
+    .port_info 1 /INPUT 1 "reset"
+    .port_info 2 /INPUT 1 "start"
+    .port_info 3 /INPUT 1 "q_full"
+    .port_info 4 /INPUT 1 "k_full"
+    .port_info 5 /INPUT 1 "ld_done"
+    .port_info 6 /INPUT 1 "ofifo_wr"
+    .port_info 7 /INPUT 1 "sfp_ready"
+    .port_info 8 /INPUT 1 "int_fifo_full"
+    .port_info 9 /OUTPUT 19 "inst"
+    .port_info 10 /OUTPUT 1 "done"
+P_0x1ad2940 .param/l "EXEC" 1 2 58, C4<0100>;
+P_0x1ad2980 .param/l "IDLE" 1 2 54, C4<0000>;
+P_0x1ad29c0 .param/l "K_LOAD" 1 2 57, C4<0011>;
+P_0x1ad2a00 .param/l "K_WRITE" 1 2 56, C4<0010>;
+P_0x1ad2a40 .param/l "OFIFO_WRITE" 1 2 59, C4<0101>;
+P_0x1ad2a80 .param/l "Q_WRITE" 1 2 55, C4<0001>;
+P_0x1ad2ac0 .param/l "SFP_ACCUM" 1 2 60, C4<0110>;
+P_0x1ad2b00 .param/l "SFP_DIV" 1 2 62, C4<1000>;
+P_0x1ad2b40 .param/l "SFP_HOLD" 1 2 61, C4<0111>;
+P_0x1ad2b80 .param/l "WRITE_PMEM" 1 2 63, C4<1001>;
+o0x7f1df84e7018 .functor BUFZ 1, C4<z>; HiZ drive
+v0x1acf420_0 .net "clk", 0 0, o0x7f1df84e7018;  0 drivers
+v0x1aebc20_0 .var "counter", 4 0;
+v0x1aebd00_0 .var "current_state", 3 0;
+v0x1aebdf0_0 .net "done", 0 0, L_0x1aed140;  1 drivers
+v0x1aebeb0_0 .var "inst", 18 0;
+o0x7f1df84e7108 .functor BUFZ 1, C4<z>; HiZ drive
+v0x1aebfe0_0 .net "int_fifo_full", 0 0, o0x7f1df84e7108;  0 drivers
+o0x7f1df84e7138 .functor BUFZ 1, C4<z>; HiZ drive
+v0x1aec0a0_0 .net "k_full", 0 0, o0x7f1df84e7138;  0 drivers
+o0x7f1df84e7168 .functor BUFZ 1, C4<z>; HiZ drive
+v0x1aec160_0 .net "ld_done", 0 0, o0x7f1df84e7168;  0 drivers
+v0x1aec220_0 .var "nxt_state", 3 0;
+o0x7f1df84e71c8 .functor BUFZ 1, C4<z>; HiZ drive
+v0x1aec390_0 .net "ofifo_wr", 0 0, o0x7f1df84e71c8;  0 drivers
+o0x7f1df84e71f8 .functor BUFZ 1, C4<z>; HiZ drive
+v0x1aec450_0 .net "q_full", 0 0, o0x7f1df84e71f8;  0 drivers
+o0x7f1df84e7228 .functor BUFZ 1, C4<z>; HiZ drive
+v0x1aec510_0 .net "reset", 0 0, o0x7f1df84e7228;  0 drivers
+o0x7f1df84e7258 .functor BUFZ 1, C4<z>; HiZ drive
+v0x1aec5d0_0 .net "sfp_ready", 0 0, o0x7f1df84e7258;  0 drivers
+o0x7f1df84e7288 .functor BUFZ 1, C4<z>; HiZ drive
+v0x1aec690_0 .net "start", 0 0, o0x7f1df84e7288;  0 drivers
+E_0x1ad06f0 .event posedge, v0x1acf420_0;
+L_0x1aed140 .reduce/nor v0x1aebd00_0;
+S_0x1acf280 .scope module, "controller_tb" "controller_tb" 3 1;
+ .timescale 0 0;
+v0x1aec910_0 .var *"_s0", 0 0; Local signal
+v0x1aeca10_0 .var "clk", 0 0;
+v0x1aecad0_0 .var "int_fifo_full", 0 0;
+v0x1aecb70_0 .var "k_full", 0 0;
+v0x1aecc30_0 .var "ld_done", 0 0;
+v0x1aeccf0_0 .var "ofifo_wr", 0 0;
+v0x1aecdb0_0 .var "q_full", 0 0;
+v0x1aece70_0 .var "reset", 0 0;
+v0x1aecf30_0 .var "sfp_ready", 0 0;
+v0x1aed080_0 .var "start", 0 0;
+    .scope S_0x1abf530;
+T_0 ;
+    %wait E_0x1ad06f0;
+    %load/vec4 v0x1aec510_0;
+    %flag_set/vec4 8;
+    %jmp/0xz  T_0.0, 8;
+    %pushi/vec4 0, 0, 4;
+    %assign/vec4 v0x1aebd00_0, 0;
+    %pushi/vec4 0, 0, 4;
+    %assign/vec4 v0x1aec220_0, 0;
+    %pushi/vec4 0, 0, 5;
+    %assign/vec4 v0x1aebc20_0, 0;
+    %jmp T_0.1;
+T_0.0 ;
+    %load/vec4 v0x1aec220_0;
+    %assign/vec4 v0x1aebd00_0, 0;
+T_0.1 ;
+    %load/vec4 v0x1aebd00_0;
+    %dup/vec4;
+    %pushi/vec4 0, 0, 4;
+    %cmp/u;
+    %jmp/1 T_0.2, 6;
+    %dup/vec4;
+    %pushi/vec4 1, 0, 4;
+    %cmp/u;
+    %jmp/1 T_0.3, 6;
+    %jmp T_0.4;
+T_0.2 ;
+    %load/vec4 v0x1aec690_0;
+    %flag_set/vec4 8;
+    %jmp/0xz  T_0.5, 8;
+    %pushi/vec4 1, 0, 4;
+    %assign/vec4 v0x1aec220_0, 0;
+T_0.5 ;
+    %jmp T_0.4;
+T_0.3 ;
+    %load/vec4 v0x1aebc20_0;
+    %cmpi/ne 7, 0, 5;
+    %jmp/0xz  T_0.7, 4;
+    %pushi/vec4 1, 0, 1;
+    %ix/load 4, 4, 0;
+    %ix/load 5, 0, 0;
+    %flag_set/imm 4, 0;
+    %assign/vec4/off/d v0x1aebeb0_0, 4, 5;
+    %load/vec4 v0x1aebc20_0;
+    %parti/s 4, 0, 2;
+    %ix/load 4, 12, 0;
+    %ix/load 5, 0, 0;
+    %flag_set/imm 4, 0;
+    %assign/vec4/off/d v0x1aebeb0_0, 4, 5;
+    %load/vec4 v0x1aebc20_0;
+    %addi 1, 0, 5;
+    %assign/vec4 v0x1aebc20_0, 0;
+    %jmp T_0.8;
+T_0.7 ;
+    %pushi/vec4 2, 0, 4;
+    %assign/vec4 v0x1aec220_0, 0;
+    %pushi/vec4 0, 0, 5;
+    %assign/vec4 v0x1aebc20_0, 0;
+    %pushi/vec4 0, 0, 4;
+    %ix/load 4, 12, 0;
+    %ix/load 5, 0, 0;
+    %flag_set/imm 4, 0;
+    %assign/vec4/off/d v0x1aebeb0_0, 4, 5;
+    %pushi/vec4 0, 0, 1;
+    %ix/load 4, 4, 0;
+    %ix/load 5, 0, 0;
+    %flag_set/imm 4, 0;
+    %assign/vec4/off/d v0x1aebeb0_0, 4, 5;
+T_0.8 ;
+    %jmp T_0.4;
+T_0.4 ;
+    %pop/vec4 1;
+    %jmp T_0;
+    .thread T_0;
+    .scope S_0x1acf280;
+T_1 ;
+    %load/vec4 v0x1aeca10_0;
+    %inv;
+    %store/vec4 v0x1aec910_0, 0, 1;
+    %pushi/vec4 1, 0, 64;
+    %ix/vec4 4;
+    %delayx 4;
+    %load/vec4 v0x1aec910_0;
+    %store/vec4 v0x1aeca10_0, 0, 1;
+    %jmp T_1;
+    .thread T_1;
+    .scope S_0x1acf280;
+T_2 ;
+    %vpi_call 3 21 "$dumpfile", "controller_tb.vcd" {0 0 0};
+    %vpi_call 3 22 "$dumpvars", 32'sb00000000000000000000000000000000, S_0x1acf280 {0 0 0};
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x1aeca10_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x1aece70_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x1aed080_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x1aecdb0_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x1aecb70_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x1aecc30_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x1aeccf0_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x1aecf30_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x1aecad0_0, 0, 1;
+    %delay 2, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x1aece70_0, 0, 1;
+    %delay 2, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x1aece70_0, 0, 1;
+    %delay 5, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x1aed080_0, 0, 1;
+    %delay 2, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x1aed080_0, 0, 1;
+    %vpi_call 3 41 "$finish" {0 0 0};
+    %end;
+    .thread T_2;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "verilog/controller.v";
+    "verilog/controller_tb.v";
