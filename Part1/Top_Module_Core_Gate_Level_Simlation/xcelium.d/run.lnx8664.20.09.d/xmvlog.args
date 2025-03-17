@@ -14,7 +14,7 @@ CUVWSP
 ./netlist/core.pnr.v
 -VFILE
 /home/linux/ieng6/ee260bwi25/public/PDKdata/verilog/tcbn65gplus.v
-./netlist/core_tb.v
+./netlist/core_tb_updated.v
 -CDSLIB
 ./xcelium.d/run.lnx8664.20.09.d/cdsrun.lib
 -HDLVAR

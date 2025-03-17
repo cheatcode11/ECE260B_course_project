@@ -13,7 +13,7 @@ xrun \
 -noparamerr \
 -v ./netlist/core.pnr.v \
 -v /home/linux/ieng6/ee260bwi25/public/PDKdata/verilog/tcbn65gplus.v \
-./netlist/core_tb.v
+./netlist/core_tb_updated.v
 
 
 #+xmseq_udp_delay+20ps \

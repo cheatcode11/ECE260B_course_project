@@ -91,12 +91,11 @@ $finish;
 end
 
 always@(posedge clk) begin
-
-q_full     <= q_full_wire;
-k_full     <= k_full_wire;
-ld_done    <= ld_done_wire;
-ofifo_wr   <= ofifo_wr_wire;
-ofifo_full <= ofifo_wr_wire;
+if(q_full_wire) q_full     <= 1'b1;
+if(k_full_wire) k_full     <= 1'b1;
+if(ld_done_wire) ld_done    <= 1'b1;
+if(ofifo_wr_wire) ofifo_wr   <= 1'b1;
+if(ofifo_wr_wire) ofifo_full <= 1'b1;
 
 
 end
