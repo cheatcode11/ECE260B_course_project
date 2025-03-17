@@ -447,7 +447,8 @@ for (q=0; q<total_cycle; q=q+1) begin
         $display("******* NORM OUTPUT TEST PASSED for cycle %0d *********", q);
     else
         $display("FAILED. Norm output did not match for cycle %0d. Hardware out = %h   Expected out = %h", q, out, expected_norm_output[q]);
-    
+     
+        $display("Hardware out = %h   Expected out = %h", out, expected_norm_output[q]);
     // Increment PMEM address for next read
     if (q < total_cycle-1) begin
         pmem_add = pmem_add + 1;
