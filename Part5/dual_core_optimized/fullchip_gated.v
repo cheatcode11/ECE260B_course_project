@@ -30,7 +30,7 @@ core_gated #(.bw(bw), .bw_psum(bw_psum), .col(col), .pr(pr)) core_instance (
 );
 
     // Instantiating CKLNQD2
-    reg Q;
+    wire Q;
     wire TE, E, CP;
     CKLNQD2 my_instance (
         .TE(TE),
