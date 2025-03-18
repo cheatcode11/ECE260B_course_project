@@ -1,9 +1,7 @@
-Part 4 : Dual Core with SFP (Baseline)
+## Part 4 : Dual Core with SFP (Baseline) ##
 
-RTL
-
-Synth 
-
-Pnr
-
-RTL_Sim
+Verilog : TB is failing, FIXME for tb required
+syn_core : scripts ready
+pnr_core : scripts ready
+syn_fullchip : TODO: modify constraints file
+pnr_fullchip : scripts ready, TODO: modify initFloorPlan and Pinplacement if required
