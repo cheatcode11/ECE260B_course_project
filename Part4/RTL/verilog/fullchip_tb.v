@@ -120,7 +120,8 @@ real sfp_out_real;
 //Instantiating the fullchip module
 fullchip #(.bw(bw), .bw_psum(bw_psum), .col(col), .pr(pr)) fullchip_instance (
       .reset(reset),
-      .clk(clk), 
+      .clk0(clk),
+      .clk1(clk),
       .mem_in0(mem_in_core0), 
       .mem_in1(mem_in_core1), 
       .inst(inst),
