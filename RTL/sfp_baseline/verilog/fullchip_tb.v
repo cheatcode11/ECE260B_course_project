@@ -405,7 +405,8 @@ $display("##### move ofifo to pmem #####");
     #0.5 clk = 1'b0; 
     pmem_wr = 0;
     pmem_rd = 1; 
-    
+   #0.5 clk = 1'b1;
+	#0.5 clk = 1'b0; 
 	// First compute the sum
 	div = 0;
 	acc = 1;
