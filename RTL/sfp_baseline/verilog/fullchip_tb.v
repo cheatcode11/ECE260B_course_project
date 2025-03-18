@@ -215,12 +215,14 @@ for (t=0; t<total_cycle; t=t+1) begin
      temp16b_tbtest[t] =temp16b;
 	// Normalized values
 	for(q = 0; q < col; q = q+1) begin
-		temp_result = result[t][q];
+		temp_result = ((result[t][q] < 0) ? (-1 * result[t][q]) : (result[t][q])); 
+		//temp_result = result[t][q];
 		sum_this_core = temp_sum;
+		$display("sum_this_core: %h", sum_this_core);
 		// Ajay: currently hardcoded to 10. Change when 2 core is
 		// implemented
-		sum_2core = 8;
-		temp5b_norm = temp_result / sum_2core;
+		sum_2core = sum_this_core;
+		temp5b_norm = {temp_result, 8'b0} / sum_2core;
 		//temp5b_norm = temp_result >> 3;
 		temp16b_norm = {temp16b_norm[139:0], temp5b_norm};
 	end
@@ -418,6 +420,8 @@ $display("##### move ofifo to pmem #####");
 	div = 1;
 	#0.5 clk = 1'b1;
 	#0.5 clk = 1'b0;
+	//#0.5 clk = 1'b1;
+	//#0.5 clk = 1'b0;
 	div = 0;
        	//$display("Normalized output : %40h",   out);
 	
@@ -455,6 +459,8 @@ for (q=0; q<total_cycle; q=q+1) begin
 	#0.5 clk = 1'b0;
 	#0.5 clk = 1'b1;
 	
+		
+
 	if(out == expected_norm_output[q])
 		$display("******* NORM OUTPUT TEST PASSED *********");
 	else
