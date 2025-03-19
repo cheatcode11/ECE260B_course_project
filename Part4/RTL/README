@@ -1,6 +1,5 @@
 ## Part 4 : Dual Core with SFP (Baseline) ##
 
-Verilog : TB is failing, FIXME for tb required
 syn_core : scripts ready
 pnr_core : scripts ready
 syn_fullchip : TODO: modify constraints file
