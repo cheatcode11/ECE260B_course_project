@@ -24,7 +24,6 @@ module async_fifo #(parameter depth = 8, parameter data_width = 8)
         if (wr_rst) begin
             bwr_ptr <= 0;
             gwr_ptr <= 0;
-            error<= 0;
         end 
         else if (wr && !full) begin
             bwr_ptr <= bwr_ptr + 1;
@@ -36,7 +35,6 @@ module async_fifo #(parameter depth = 8, parameter data_width = 8)
         if (rd_rst) begin
             brd_ptr <= 0;
             grd_ptr <= 0;
-            rd_data <= 0;
         end 
         else if (rd && !empty) begin
             brd_ptr <= brd_ptr + 1;
@@ -49,22 +47,23 @@ module async_fifo #(parameter depth = 8, parameter data_width = 8)
         if (wr && !full) begin
             fifo[bwr_ptr] <= wr_data;
         end
-        else 
-        error = error + 1;
-    end
+        end
 
     // Read logic
     always @(posedge rd_clk) begin
-        if (rd && !empty) begin
+        if (rd_rst) begin
+            rd_data <= 0;
+        end
+        else if (rd && !empty) begin
             rd_data <= fifo[brd_ptr];
         end
-        else
-        error = error + 1;
-    end
+        end
+    
 
     // Full and empty logic
     assign full = (wr_rst) ? 1'b0 : (bwr_ptr[ptr_width-2] == brd_ptr[ptr_width-2]) && ((brd_ptr[ptr_width-1] != bwr_ptr[ptr_width-1]));
     assign empty = (rd_rst) ? 1'b0 : (bwr_ptr == brd_ptr);
 
 endmodule
+
 
