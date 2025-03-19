@@ -30,6 +30,8 @@ integer  Q[total_cycle-1:0][pr-1:0];
 
 //Debugging variables
 integer  result[total_cycle-1:0][2*col-1:0];
+reg signed [bw_psum-1:0] abs_result;
+
 reg  [bw_psum*col-1:0] temp16b_tbtest[total_cycle:0];//for finding errors in testbench-Tanish
 reg  [bw_psum*col-1:0] temp16b_tbtest0[total_cycle:0];//for finding errors in testbench-Tanish
 reg  [bw_psum*col-1:0] temp16b_tbtest1[total_cycle:0];//for finding errors in testbench-Tanish
@@ -49,6 +51,8 @@ reg [bw_psum*col-1:0] expected_norm_output0[total_cycle:0];
 reg [bw_psum*col-1:0] expected_norm_output1[total_cycle:0];
 reg [bw_psum*col-1:0] core0_mac_expected_out[total_cycle:0];
 reg [bw_psum*col-1:0] core1_mac_expected_out[total_cycle:0];
+reg [bw_psum*col-1:0] core0_mac_expected_nv[total_cycle:0];
+reg [bw_psum*col-1:0] core1_mac_expected_nv[total_cycle:0];
 integer i,j,k,t,p,q,s,u,m,r;
 
 integer error = 0;
@@ -95,25 +99,6 @@ assign inst[1] = pmem_rd;
 assign inst[0] = pmem_wr;
 
 
-
-
-//------------------------------------------------------------------//
-// Not used variables FIXME -----------------------------------------//
-//-------------------------------------------------------------------//
-real expected_norm_result[total_cycle-1:0][col-1:0];
-reg signed [bw_psum-1:0] temp_result;
-integer  result_fn[total_cycle-1:0][col-1:0];//Tanish
-//integer abs_result;
-reg signed [bw_psum-1:0] abs_result;
-//reg signed [bw_psum-1:0]abs_result[total_cycle-1:0][2*col-1:0];
-reg signed [bw_psum+4-1:0]sum_core0[total_cycle-1:0];
-reg signed [bw_psum+4-1:0]sum_core1[total_cycle-1:0];
-reg signed [bw_psum-1:0] norm_reg_result;
-reg signed [bw_psum*col-1:0] temp16b_norm;
-reg [bw_psum+3:0] sum_in;
-reg [bw_psum+3:0] sum_this_core;
-reg [bw_psum-1:0] sum_2core;
-real sfp_out_real;
 
 //------------------------------------------------------------------//
 //-------------------------------------------------------------------//
@@ -543,7 +528,7 @@ $display("##### move ofifo to pmem #####");
     pmem_add = pmem_add + 1;
   end
   #0.5 clk = 1'b0;  
-  pmem_rd = 0; pmem_add = 0; acc = 0; div = 0; pmem_wr = 0;
+  pmem_rd = 0; pmem_add = 0; acc = 0; div = 0; pmem_wr = 0; sfp_pmem_wr = 0;
   #0.5 clk = 1'b1;           
   //MAC output is no more connected to out as was in part1
 	
@@ -582,7 +567,6 @@ end
 
 $display("##### Value  txt reading #####");
 
-
   qk_file = $fopen("vdata.txt", "r");
 
   //// To get rid of first 3 lines in data file ////
@@ -596,7 +580,6 @@ $display("##### Value  txt reading #####");
     for (j=0; j<pr; j=j+1) begin
           qk_scan_file = $fscanf(qk_file, "%d\n", captured_data);
           V[q][j] = captured_data;
-          //$display("%d\n", Q [q][j]);
     end
   end
 /////////////////////////////////
@@ -658,10 +641,11 @@ $display("##### Norm  Core 1 txt reading #####");
   qk_scan_file = $fscanf(qk_file, "%s\n", captured_data);
 
 
-  for (q=0; q<col; q=q+1) begin
+  for (q=col; q<2*col; q=q+1) begin
     for (j=0; j<pr; j=j+1) begin
           qk_scan_file = $fscanf(qk_file, "%d\n", captured_data);
-          N[q+ col][j] = captured_data;
+          N[q][j] = captured_data;
+
     end
   end
 /////////////////////////////////
@@ -694,14 +678,6 @@ $display("##### Qmem writing  #####");
     mem_in_core1[6*bw-1:5*bw] = V[q][5];
     mem_in_core1[7*bw-1:6*bw] = V[q][6];
     mem_in_core1[8*bw-1:7*bw] = V[q][7];
-    //mem_in[9*bw-1:8*bw] = Q[q][8];
-    //mem_in[10*bw-1:9*bw] = Q[q][9];
-    //mem_in[11*bw-1:10*bw] = Q[q][10];
-    //mem_in[12*bw-1:11*bw] = Q[q][11];
-    //mem_in[13*bw-1:12*bw] = Q[q][12];
-    //mem_in[14*bw-1:13*bw] = Q[q][13];
-    //mem_in[15*bw-1:14*bw] = Q[q][14];
-    //mem_in[16*bw-1:15*bw] = Q[q][15];
 
     #0.5 clk = 1'b1;  
 
@@ -801,11 +777,16 @@ $display("##### Norm data loading to processor #####");
     #0.5 clk = 1'b1;   
  end
 
+
 /////////////// Estimated result printing /////////////////
-$display("##### Estimated multiplication result Core 0 #####");
+
+$display("##### Computing Estimated results CORE0  #####");
 
 for (t=0; t<total_cycle; t=t+1) begin
-       temp16b_tbtest0[t]= 0;
+	// Initialize zeros     
+       temp16b_tbtest[t]= 0;
+       expected_norm_output0[t] = 0;
+     
   end
   for (t=0; t<total_cycle; t=t+1) begin
      for (q=0; q<col; q=q+1) begin
@@ -814,41 +795,53 @@ for (t=0; t<total_cycle; t=t+1) begin
   end
 
   for (t=0; t<total_cycle; t=t+1) begin
+    temp_sum0[t] = 0;
      for (q=0; q<col; q=q+1) begin
          for (k=0; k<pr; k=k+1) begin
             result[t][q] = result[t][q] + V[t][k] * N[q][k];
          end
+
          temp5b = result[t][q];
          temp16b = {temp16b[139:0], temp5b};
+      // Update sum
+         temp_sum0[t] = temp_sum0[t] + ((result[t][q] < 0) ? (-1 * result[t][q]) : (result[t][q]));
      end
-
-     $display("prd @cycle%2d: %40h", t, temp16b);
-     temp16b_tbtest0[t] =temp16b;
+     core0_mac_expected_nv[t] = temp16b;
+     //$display("Core0: MAC exp out = %40h", core0_mac_expected_out[t]);
   end
-/////////////// Estimated result printing /////////////////
-$display("##### Estimated multiplication result Core 1 #####");
+     //**// temp16b_tbtest[t] =temp16b;
 
-for (t=0; t<total_cycle; t=t+1) begin
-       temp16b_tbtest1[t]= 0;
+     temp16b = 0;
+
+$display("##### Computing Estimated results CORE1  #####");
+
+for (t=0; t<total_cycle; t=t+1) begin 
+       temp16b_tbtest[t]= 0;
+       expected_norm_output1[t] = 0;
   end
   for (t=0; t<total_cycle; t=t+1) begin
-     for (q=0; q<col; q=q+1) begin
+     for (q=col; q<2*col; q=q+1) begin
        result[t][q] = 0;
      end
   end
 
+
   for (t=0; t<total_cycle; t=t+1) begin
+    temp_sum1[t] = 0;
      for (q=col; q<2*col; q=q+1) begin
          for (k=0; k<pr; k=k+1) begin
             result[t][q] = result[t][q] + V[t][k] * N[q][k];
          end
+
+      // Update sum'
          temp5b = result[t][q];
          temp16b = {temp16b[139:0], temp5b};
-     end
-
-     $display("prd @cycle%2d: %40h", t, temp16b);
-     temp16b_tbtest1[t] =temp16b;
+         temp_sum1[t] = temp_sum1[t] + ((result[t][q] < 0) ? (-1 * result[t][q]) : (result[t][q]));
+      end
+      core1_mac_expected_nv[t] = temp16b;
+	//$display("Core 1 mac exp out = %40h", core1_mac_expected_out[t]);
   end
+
 
 ///// execution  /////
 $display("##### execute #####");
@@ -871,12 +864,16 @@ $display("##### execute #####");
   #0.5 clk = 1'b1;  
 
 
+
+
 ///////////////////////////////////////////
 
  for (q=0; q<10; q=q+1) begin
     #0.5 clk = 1'b0;   
     #0.5 clk = 1'b1;   
  end
+
+
 
 
 ////////////// output fifo rd and wb to psum mem ///////////////////
@@ -892,46 +889,57 @@ $display("##### move ofifo to pmem #####");
        pmem_add = pmem_add + 1;
     end
          #0.5 clk = 1'b1;
-         
-
    end//End of writing
-        //#0.5 clk = 1'b0;  
-     pmem_wr = 0; pmem_add = 0; ofifo_rd = 0;
-
-  for (q=0; q<total_cycle+1; q=q+1) begin
-    #0.5 clk = 1'b0;  
-    //ofifo_rd = 1; 
+      pmem_wr = 0; pmem_add = 0; ofifo_rd = 0;
+ ///////////////////////////////////////////////////////////////////
+	 for (q=0; q<5; q=q+1) begin
+    #0.5 clk = 1'b0;   
+    #0.5 clk = 1'b1;   
+ end
+ ////////////////////////////////////////////////////////////////
+  for (q=0; q<total_cycle; q=q+1) begin
+    #0.5 clk = 1'b0; 
+    pmem_wr = 0;
     pmem_rd = 1; 
+    //if(q>0) pmem_add = pmem_add + 1;
+    #0.5 clk = 1'b1;
+    #0.5 clk = 1'b0;
 
-    if (q>0) begin
-       pmem_add = pmem_add + 1;
-       end
-    
-    if (q>0) begin
-    if (fullchip_instance.core_instance0.out == temp16b_tbtest0[q-1]) // this if condition is needed as the output is available at the next cycle
-          $display("Computed data matched Core 0 :D, %40h vs.  %40h",   fullchip_instance.core_instance0.out, temp16b_tbtest0[q-1]);
-    else begin
-          $display("Computed data ERROR Core 0 (>.<),  %40h vs.  %40h",  fullchip_instance.core_instance0.out, temp16b_tbtest0[q-1]);
-          error = error+1;
-    end
-    if (fullchip_instance.core_instance1.out == temp16b_tbtest1[q-1]) // this if condition is needed as the output is available at the next cycle
-          $display("Computed data matched Core 1:D, %40h vs.  %40h",   fullchip_instance.core_instance1.out, temp16b_tbtest1[q-1]);
-    else begin
-          $display("Computed data ERROR Core 1(>.<),  %40h vs.  %40h",  fullchip_instance.core_instance1.out, temp16b_tbtest1[q-1]);
-          error = error+1;
-    end
-    $display("Total ERROR: %3d",  error);
-    end
-         #0.5 clk = 1'b1;
-        
-  
-   end//End of reading
-     
-        #0.5 clk = 1'b0;  
-     pmem_rd = 0; pmem_add = 0;
-     #0.5 clk = 1'b1;
-
+     //$display("Hardware MAC output = %40h", out);
+	if(fullchip_instance.core_instance0.out == core0_mac_expected_nv[q]) begin
+	 	$display("******* Core 0 MAC OUTPUT Norm * Value TEST PASSED *********");
+	 end
+	 else
+	 	$display("FAILED Core 0 MAC output test. MAC Hardware out = %h Expected out = %40h", fullchip_instance.core_instance0.out, core0_mac_expected_nv[q]);
+         
+	if(fullchip_instance.core_instance1.out == core1_mac_expected_nv[q]) begin
+	 	$display("******* Core 1 MAC OUTPUT Norm * Value TEST PASSED *********");
+	 end
+	 else
+	 	$display("FAILED Core 1 MAC output test. MAC Hardware out = %h Expected out = %40h", fullchip_instance.core_instance1.out, core1_mac_expected_nv[q]);
+    pmem_rd = 0;
+	  #0.5 clk = 1'b1;
+	  #0.5 clk = 1'b0;
+	// Need to wait for a cycle. This is how sfp is designed.
+	  #0.5 clk = 1'b1;
+	  #0.5 clk = 1'b0;
+	  #0.5 clk = 1'b1;
+	  #0.5 clk = 1'b0;
+	  // The compute the division
+	  #0.5 clk = 1'b1;
+	  #0.5 clk = 1'b0;
+    #0.5 clk = 1'b1;
+	  #0.5 clk = 1'b0;
+	  #0.5 clk = 1'b1;
+    pmem_add = pmem_add + 1;
+  end
+  #0.5 clk = 1'b0;  
+  pmem_rd = 0; pmem_add = 0; acc = 0; div = 0; pmem_wr = 0; sfp_pmem_wr = 0;
+  #0.5 clk = 1'b1;           
+  //MAC output is no more connected to out as was in part1     
+  	 	$display("******* Run finished:) *********");
 
 end
 
+    
 endmodule
