@@ -131,8 +131,8 @@ sfp_row #(.bw(bw), .bw_psum(bw_psum), .col(col)) sfp_instance(
 
   //////////// For printing purpose ////////////
   always @(posedge clk) begin
-      if(pmem_wr)
-         $display("Memory write to PSUM mem add %x %x ", pmem_add, pmem_in); 
+      //if(pmem_wr)
+         //$display("Memory write to PSUM mem add %x %x ", pmem_add, pmem_in); 
          //$display("Memory obtained from PSUM mem add %x %x ", pmem_add, pmem_out); 
   end
 

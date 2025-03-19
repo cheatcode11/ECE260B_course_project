@@ -29,7 +29,7 @@ integer  K[2*col-1:0][pr-1:0];
 integer  Q[total_cycle-1:0][pr-1:0];
 
 //Debugging variables
-integer  result[total_cycle-1:0][col-1:0];
+integer  result[total_cycle-1:0][2*col-1:0];
 reg  [bw_psum*col-1:0] temp16b_tbtest[total_cycle:0];//for finding errors in testbench-Tanish
 reg  [bw_psum*col-1:0] temp16b_tbtest0[total_cycle:0];//for finding errors in testbench-Tanish
 reg  [bw_psum*col-1:0] temp16b_tbtest1[total_cycle:0];//for finding errors in testbench-Tanish
@@ -47,8 +47,8 @@ integer  sum[total_cycle-1:0];
 // Expected outputs after normalization
 reg [bw_psum*col-1:0] expected_norm_output0[total_cycle:0];
 reg [bw_psum*col-1:0] expected_norm_output1[total_cycle:0];
-
-
+reg [bw_psum*col-1:0] core0_mac_expected_out[total_cycle:0];
+reg [bw_psum*col-1:0] core1_mac_expected_out[total_cycle:0];
 integer i,j,k,t,p,q,s,u,m,r;
 
 integer error = 0;
@@ -103,7 +103,9 @@ assign inst[0] = pmem_wr;
 real expected_norm_result[total_cycle-1:0][col-1:0];
 reg signed [bw_psum-1:0] temp_result;
 integer  result_fn[total_cycle-1:0][col-1:0];//Tanish
-reg signed [bw_psum-1:0]abs_result[total_cycle-1:0][2*col-1:0];
+//integer abs_result;
+reg signed [bw_psum-1:0] abs_result;
+//reg signed [bw_psum-1:0]abs_result[total_cycle-1:0][2*col-1:0];
 reg signed [bw_psum+4-1:0]sum_core0[total_cycle-1:0];
 reg signed [bw_psum+4-1:0]sum_core1[total_cycle-1:0];
 reg signed [bw_psum-1:0] norm_reg_result;
@@ -233,7 +235,7 @@ $display("##### K data Core 1 txt reading #####");
 $display("##### Computing Estimated results CORE0  #####");
 
 for (t=0; t<total_cycle; t=t+1) begin
-     
+	// Initialize zeros     
        temp16b_tbtest[t]= 0;
        expected_norm_output0[t] = 0;
      
@@ -256,9 +258,12 @@ for (t=0; t<total_cycle; t=t+1) begin
       // Update sum
          temp_sum0[t] = temp_sum0[t] + ((result[t][q] < 0) ? (-1 * result[t][q]) : (result[t][q]));
      end
+     core0_mac_expected_out[t] = temp16b;
+     //$display("Core0: MAC exp out = %40h", core0_mac_expected_out[t]);
   end
      //**// temp16b_tbtest[t] =temp16b;
 
+     temp16b = 0;
 
 $display("##### Computing Estimated results CORE1  #####");
 
@@ -267,7 +272,7 @@ for (t=0; t<total_cycle; t=t+1) begin
        expected_norm_output1[t] = 0;
   end
   for (t=0; t<total_cycle; t=t+1) begin
-     for (q=0; q<col; q=q+1) begin
+     for (q=col; q<2*col; q=q+1) begin
        result[t][q] = 0;
      end
   end
@@ -284,7 +289,9 @@ for (t=0; t<total_cycle; t=t+1) begin
          temp5b = result[t][q];
          temp16b = {temp16b[139:0], temp5b};
          temp_sum1[t] = temp_sum1[t] + ((result[t][q] < 0) ? (-1 * result[t][q]) : (result[t][q]));
-     end
+      end
+      core1_mac_expected_out[t] = temp16b;
+	//$display("Core 1 mac exp out = %40h", core1_mac_expected_out[t]);
   end
 
       //** temp16b_tbtest[t] =temp16b;
@@ -293,21 +300,23 @@ for (t=0; t<total_cycle; t=t+1) begin
 $display("##### Estimated normalization result CORE0  #####");
   for (t=0; t<total_cycle; t=t+1) begin
      for (q=0; q<col; q=q+1) begin
-       norm_result = {result[t][q], 8'b0}/(temp_sum0[t][bw_psum+3:7] + temp_sum1[t][bw_psum+3:7] );
+       abs_result = (result[t][q] < 0) ? (-1 * result[t][q]) : (result[t][q]); 
+       norm_result = {abs_result, 8'b0}/(temp_sum0[t][bw_psum+3:7] + temp_sum1[t][bw_psum+3:7]);
        norm = {norm[139:0],norm_result};
      end
-     $display("Prd @Cycle Core 0 %d = %h",t,norm);
+     //$display("Norm Prd @Cycle Core 0 %d = %h",t,norm);
      expected_norm_output0[t] = norm;
   end
-
+norm = 0;
 $display("##### Estimated normalization result CORE1 #####");
   for (t=0; t<total_cycle; t=t+1) begin
      for (q=col; q<2*col; q=q+1) begin
-       norm_result = {result[t][q], 8'b0}/(temp_sum0[t][bw_psum+3:7] + temp_sum1[t][bw_psum+3:7] );
+       abs_result = (result[t][q] < 0) ? (-1 * result[t][q]) : (result[t][q]);
+       norm_result = {abs_result, 8'b0}/(temp_sum0[t][bw_psum+3:7] + temp_sum1[t][bw_psum+3:7] );
        norm = {norm[139:0],norm_result};
      end
      expected_norm_output1[t] = norm;
-     $display("Prd @Cycle Core 1 %d = %h",t,norm);
+     //$display("Prd @Cycle Core 1 %d = %h",t,norm);
   end
 
 //////////////////////////////////////////////
@@ -493,11 +502,25 @@ $display("##### move ofifo to pmem #####");
     div = 0;
     pmem_wr = 0;
     pmem_rd = 1; 
-    if(q>0) pmem_add = pmem_add + 1;
+    //if(q>0) pmem_add = pmem_add + 1;
     #0.5 clk = 1'b1;
     #0.5 clk = 1'b0;
+
+     //$display("Hardware MAC output = %40h", out);
+	if(out[col*bw_psum-1:0] == core0_mac_expected_out[q]) begin
+	 	$display("******* Core 0 MAC OUTPUT TEST PASSED *********");
+	 end
+	 else
+	 	$display("FAILED Core 0 MAC output test. MAC Hardware out = %h Expected out = %40h", out[col*bw_psum-1:0], core0_mac_expected_out[q]);
+         
+	if(out[2*col*bw_psum-1:col*bw_psum] == core1_mac_expected_out[q]) begin
+	 	$display("******* Core 1 MAC OUTPUT TEST PASSED *********");
+	 end
+	 else
+	 	$display("FAILED Core 1 MAC output test. MAC Hardware out = %h Expected out = %40h", out[col*bw_psum-1:0], core1_mac_expected_out[q]);
+	
 	  acc = 1;
-    pmem_rd = 0;
+          pmem_rd = 0;
 	  #0.5 clk = 1'b1;
 	  #0.5 clk = 1'b0;
 	// Need to wait for a cycle. This is how sfp is designed.
@@ -514,30 +537,30 @@ $display("##### move ofifo to pmem #####");
     pmem_wr = 1;
     sfp_pmem_wr = 1;
     #0.5 clk = 1'b1;
+    
+	  #0.5 clk = 1'b0;
+	  #0.5 clk = 1'b1;
+    pmem_add = pmem_add + 1;
   end
   #0.5 clk = 1'b0;  
   pmem_rd = 0; pmem_add = 0; acc = 0; div = 0; pmem_wr = 0;
   #0.5 clk = 1'b1;           
   //MAC output is no more connected to out as was in part1
-	// if(out != temp16b_tbtest[q]) begin
-	// 	$display("FAILED MAC output test. MAC Hardware out = %h   Expected out = %h", out, temp16b_tbtest[q]);
-	// end
-	// else
-	// 	$display("******* MAC OUTPUT TEST PASSED *********")
 	
 // ******* Read and verify normalized output from pmem ***********
 for (q=0; q<total_cycle; q=q+1) begin
 	#0.5 clk = 1'b0;
 	pmem_rd = 1;
+	
 	#0.5 clk = 1'b1;
 	#0.5 clk = 1'b0;
 	#0.5 clk = 1'b1;
-	if(fullchip_instance.core_instance0.out == expected_norm_output0[t])
+	if(fullchip_instance.core_instance0.out == expected_norm_output0[q])
 		$display("******* NORM OUTPUT CORE 0 TEST PASSED *********");
 	else
 		$display("FAILED. Norm output 0 did not match. Hardware out = %40h   Expected out = %40h",fullchip_instance.core_instance0.out , expected_norm_output0[q]);
 	
-	if(fullchip_instance.core_instance1.out == expected_norm_output1[t])
+	if(fullchip_instance.core_instance1.out == expected_norm_output1[q])
 		$display("******* NORM OUTPUT CORE 1 TEST PASSED *********");
 	else
 		$display("FAILED. Norm output 1 did not match. Hardware out = %40h   Expected out = %40h", fullchip_instance.core_instance1.out, expected_norm_output1[q]);
