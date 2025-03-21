@@ -33,7 +33,7 @@ sh echo hostname
 sh echo uptime
 
 #Compiler directives
-set compile_effort   "high"
+set compile_effort   "low"
 set compile_no_new_cells_at_top_level false
 set hdlin_enable_vpp true
 set hdlin_auto_save_templates false
@@ -86,7 +86,7 @@ foreach_in_collection p [all_outputs] {
 }
 
 #More compiler directives
-set compile_effort   "high"
+set compile_effort   "low"
 set_app_var ungroup_keep_original_design true
 set_register_merging [get_designs $top_module] false
 set compile_seqmap_propagate_constants false
