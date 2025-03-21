@@ -428,10 +428,10 @@ $display("##### move ofifo to pmem #####");
        end
     
     if (q>2) begin
-    if (out == temp16b_tbtest[q-3]) // this if condition is needed as the output is available at the next cycle
-          $display("Computed data matched :D, %40h vs.  %40h",   out, temp16b_tbtest[q-3]);
+    if (out == temp16b_tbtest[q-2]) // this if condition is needed as the output is available at the next cycle
+          $display("Computed data matched :D, %40h vs.  %40h",   out, temp16b_tbtest[q-2]);
 	  else begin
-          $display("Computed data ERROR (>.<),  %40h vs.  %40h",  out, temp16b_tbtest[q-3]);
+          $display("Computed data ERROR (>.<),  %40h vs.  %40h",  out, temp16b_tbtest[q-2]);
           error = error+1;
     end
     $display("Total ERROR: %3d",  error);

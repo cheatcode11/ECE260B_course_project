@@ -16,7 +16,7 @@ output signed [pr*bw-1:0] q_out;
 input  clk, reset;
 input  [1:0] i_inst; // [1]: execute, [0]: load 
 output [1:0] o_inst; // [1]: execute, [0]: load 
-output fifo_wr;
+output reg fifo_wr;
 output [pr-1:0] q_zero_out;
 input [pr-1:0] q_zero;
 
@@ -57,7 +57,7 @@ reg   [pr-1:0] k_zero_reg2;
 wire  signed [bw_psum-1:0] psum;
 
 assign o_inst = inst_q;
-assign fifo_wr = inst_2q[1];
+//assign fifo_wr = inst_2q[1];
 assign q_out  = query_q;
 assign q_zero_out = q_zero_reg;
 assign out = psum;
@@ -166,7 +166,7 @@ always @ (posedge clk) begin
     end
 
       q_zero_reg <= q_zero;
-
+      fifo_wr = inst_2q[1];
   end
 end
 
