@@ -53,6 +53,8 @@ wire div ;
 wire acc ;
 wire sfp_pmem_wr ;
 wire [bw_psum*col-1:0] sfp_in;
+wire [19:0] controller_inst;
+wire out_valid_wire;
 // SFP signals
 assign sfp_pmem_wr = controller_inst[19];
 assign acc = controller_inst[18];
@@ -72,8 +74,7 @@ assign mac_in  = controller_inst[6] ? kmem_out : qmem_out;
 assign pmem_in = (sfp_pmem_wr) ? sfp_out : fifo_out;
 assign out = pmem_out;
 
-wire [19:0] controller_inst;
-wire out_valid_wire;
+
 
 controller_2 CONTROLLER(
 	.clk(clk),
