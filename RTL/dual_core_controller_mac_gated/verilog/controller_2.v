@@ -310,60 +310,10 @@ begin
     end
 
     if(current_state == GEN_OUTPUT && nxt_state == IDLE && pre_state == GEN_OUTPUT)begin
-	inst[1] = 1'b0;
+	inst[1] <= 1'b0;
     end else if(nxt_state == GEN_OUTPUT && current_state == GEN_OUTPUT) begin
-	inst[1] = 1'b1;
-    end
-/*
-    if(sub_state == 1) inst[1] <= 1'b1;
-    else inst[1] <= 1'b0;
-
-    if(sub_state == 2) inst[18] <= 1'b1;
-    else inst[18] <= 1'b0;
-    
-    if(sub_state == 5) inst[17] <= 1'b1;
-    else inst[17] <= 1'b0;
-
-    if(sub_state == 6) begin
-	    inst[0] <= 1'b1;
-	    inst[19] <= 1'b1;
-    end
-    else inst[0] <= 1'b0;
-*/	
-        /*
-
-    if(current_state == SFP_ACCUM && pre_state == SFP_ACCUM) begin
-	    inst[1] <= 1;
-	    inst[0] <= 0;
-	    inst[17] <= 0;
-	    inst[18] <= 1;
-	    inst [19] <= 0;
-	    inst[11:8] <= counter[3:0]-1;
-	    counter <= counter + 1;
-
-	    
-    end else if(current_state == SFP_DIV && pre_state == SFP_ACCUM) begin
-	    inst[1] <= 0;
-	    inst[0] <= 0;
-	    inst[17] <= 0;
-	    inst[18] <= 0;
-	    inst [19] <= 0;
-    end else if(current_state == SFP_DIV && pre_state == SFP_DIV && nxt_state != GEN_OUTPUT) begin
-	    inst[1] <= 0;
-	    inst[0] <= 0;
-	    inst[17] <= 1;
-	    inst[18] <= 0;
-	    inst [19] <= 0;
-    end else if(current_state == SFP_ACCUM && pre_state == SFP_DIV) begin
-	    inst[1] <= 0;
-	    inst[0] <= 1;
-	    inst[17] <= 0;
-	    inst[18] <= 0;
-	    inst [19] <= 1;
-    end
-    */
-
-    
+	inst[1] <= 1'b1;
+    end    
    
     //inst <= inst_reg;
     current_state <= nxt_state;
