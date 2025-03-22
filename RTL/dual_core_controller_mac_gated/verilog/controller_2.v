@@ -173,11 +173,11 @@ begin
 			//current_state <= K_WRITE;
 			counter   <= 5'b00000;
 			inst[11:8] <= 4'b0000;
-			inst[0] = 0;
-			inst[1] = 1;
-			inst[17] =0;
-			inst[18] =0;
-			inst[19] =0;
+			inst[0] <= 0;
+			inst[1] <= 1;
+			inst[17] <=0;
+			inst[18] <=0;
+			inst[19] <=0;
 		    end
 		
 	     end
@@ -189,74 +189,74 @@ begin
 				   nxt_state <= GEN_OUTPUT;
 				   counter <= 0;
 				   inst[11:8] <= 4'b0000;
-				   	inst[0] = 0;
-					inst[1] = 0;
-					inst[17] =0;
-					inst[18] =0;
-					inst[19] =0;
+				   	inst[0] <= 0;
+					inst[1] <= 0;
+					inst[17] <=0;
+					inst[18] <=0;
+					inst[19] <=0;
 				end
 				else  	begin
 					sub_state <= SFP_SUBSTATE1;
-					inst[0] = 0;
-					inst[1] = 0;
-					inst[17] =0;
-					inst[18] =1;
+					inst[0] <= 0;
+					inst[1] <= 0;
+					inst[17]<=0;
+					inst[18] <=1;
 					//inst[19] =0;
 				end
 
 			end
 			SFP_SUBSTATE1:begin
 				sub_state <= SFP_SUBSTATE2;
-					inst[0] = 0;
-					inst[1] = 0;
-					inst[17] =0;
-					inst[18] =0;
+					inst[0]<= 0;
+					inst[1] <= 0;
+					inst[17] <=0;
+					inst[18] <=0;
 					//inst[19] =0;
 
 			end
 			SFP_SUBSTATE2: begin
 				sub_state <= SFP_SUBSTATE3;
-					inst[0] = 0;
-					inst[1] = 0;
-					inst[17] =0;
-					inst[18] =0;
+					inst[0] <= 0;
+					inst[1] <= 0;
+					inst[17] <=0;
+					inst[18] <=0;
 					//inst[19] =0;
 
 			end
 			SFP_SUBSTATE3:begin
 				sub_state <= SFP_SUBSTATE4;
-					inst[0] = 0;
-					inst[1] = 0;
-					inst[17] =1;
-					inst[18] =0;
+					inst[0] <= 0;
+					inst[1] <= 0;
+					inst[17] <=1;
+					inst[18] <=0;
 					//inst[19] =0;
 
 			end
 			SFP_SUBSTATE4: begin
 				sub_state <= SFP_SUBSTATE5;
-					inst[0] = 1;
-					inst[1] = 0;
-					inst[17] =0;
-					inst[18] =0;
-					inst[19] =1;
+					inst[0] <= 1;
+					inst[1] <= 0;
+					inst[17] <=0;
+					inst[18] <=0;
+					inst[19] <=1;
 
 			end
 			SFP_SUBSTATE5: begin
 				sub_state <= SFP_SUBSTATE6;
-					inst[0] = 1;
-					inst[1] = 0;
-					inst[17] =0;
-					inst[18] =0;
+					inst[0] <= 1;
+					inst[1] <= 0;
+					inst[17] <=0;
+					inst[18] <=0;
 					//inst[19] =0;
 
 			end
 
 			SFP_SUBSTATE6:begin
 				sub_state <= SFP_SUBSTATE0;
-					inst[0] = 0;
-					inst[1] = 1;
-					inst[17] =0;
-					inst[18] =0;
+					inst[0] <= 0;
+					inst[1] <= 1;
+					inst[17] <=0;
+					inst[18] <=0;
 					//inst[19] =0;
 				counter  <= counter + 1;
 				inst[11:8] <= counter[3:0];
