@@ -19,7 +19,7 @@ integer  captured_data;
 integer  weight [col*pr-1:0];
 `define NULL 0
 
-
+reg [2:0] count;
 //using them for norm*value calculations done for two cores
 //Using norm_core0.txt and norm_core1.txt
 
@@ -67,6 +67,8 @@ wire [2*col*bw_psum-1:0] out;
 reg [bw_psum-1:0] sfp_out;
 
 reg start;
+
+reg [319:0] responses[total_cycle-1:0];
 
 //Instantiating the fullchip module
 fullchip #(.bw(bw), .bw_psum(bw_psum), .col(col), .pr(pr)) fullchip_instance (
@@ -289,7 +291,6 @@ $display("##### Qmem writing  #####");
   for (q=0; q<total_cycle; q=q+1) begin
 
     #0.5 clk = 1'b0;  
-    //qmem_wr = 1;  if (q>0) qkmem_add = qkmem_add + 1; 
     
     mem_in_core0[1*bw-1:0*bw] = Q[q][0];
     mem_in_core0[2*bw-1:1*bw] = Q[q][1];
@@ -315,8 +316,6 @@ $display("##### Qmem writing  #####");
 
 
   #0.5 clk = 1'b0;  
-  //qmem_wr = 0; 
-  //qkmem_add = 0;
   #0.5 clk = 1'b1;  
 ///////////////////////////////////////////
 
@@ -331,7 +330,6 @@ $display("##### Kmem writing #####");
   for (q=0; q<col; q=q+1) begin
 
     #0.5 clk = 1'b0;  
-    //kmem_wr = 1; if (q>0) qkmem_add = qkmem_add + 1; 
     
     mem_in_core0[1*bw-1:0*bw] = K[q][0];
     mem_in_core0[2*bw-1:1*bw] = K[q][1];
@@ -356,8 +354,6 @@ $display("##### Kmem writing #####");
   end
 
   #0.5 clk = 1'b0;  
-  //kmem_wr = 0;  
-  //qkmem_add = 0;
   #0.5 clk = 1'b1;  
 ///////////////////////////////////////////
 
@@ -375,21 +371,13 @@ $display("##### K data loading to processor #####");
 
   for (q=0; q<col+1; q=q+1) begin
     #0.5 clk = 1'b0;  
-    //load = 1;
-/*    if (q==1) kmem_rd = 1;
-    if (q>1) begin
-        qkmem_add = qkmem_add + 1;
-    end
-*/
     #0.5 clk = 1'b1;  
   end
 
   #0.5 clk = 1'b0;  
-  //kmem_rd = 0; qkmem_add = 0;
   #0.5 clk = 1'b1;  
 
   #0.5 clk = 1'b0;  
-  //load = 0; 
   #0.5 clk = 1'b1;  
 
 ///////////////////////////////////////////
@@ -478,12 +466,12 @@ for (q=0; q<total_cycle; q=q+1) begin
 	#0.5 clk = 1'b1;
 	#0.5 clk = 1'b0;
 	#0.5 clk = 1'b1;
-	if(fullchip_instance.core_instance0.out == expected_norm_output0[q])
+	if(responses[q][159:0] == expected_norm_output0[q])
 		$display("******* NORM OUTPUT CORE 0 TEST PASSED *********");
 	else
 		$display("FAILED. Norm output 0 did not match. Hardware out = %40h   Expected out = %40h",fullchip_instance.core_instance0.out , expected_norm_output0[q]);
 	
-	if(fullchip_instance.core_instance1.out == expected_norm_output1[q])
+	if(responses[q][319:160] == expected_norm_output1[q])
 		$display("******* NORM OUTPUT CORE 1 TEST PASSED *********");
 	else
 		$display("FAILED. Norm output 1 did not match. Hardware out = %40h   Expected out = %40h", fullchip_instance.core_instance1.out, expected_norm_output1[q]);
@@ -491,6 +479,15 @@ for (q=0; q<total_cycle; q=q+1) begin
      	#0.5 clk = 1'b1;
 	#0.5 clk = 1'b0;
 end
- 
+
+always@(posedge clk) begin
+	if(reset) count <= 3'b000;
+	else if(out_valid == 2'b11) begin
+		responses[count] <= out;
+		count <= count + 1;
+	end	
+
+end
+
     
 endmodule
