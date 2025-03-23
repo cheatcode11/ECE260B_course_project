@@ -472,12 +472,12 @@ for (q=0; q<total_cycle; q=q+1) begin
 	if(responses[q][159:0] == expected_norm_output0[q])
 		$display("******* NORM OUTPUT CORE 0 TEST PASSED *********");
 	else
-		$display("FAILED. Norm output 0 did not match. Hardware out = %40h   Expected out = %40h",fullchip_instance.core_instance0.out , expected_norm_output0[q]);
+		$display("FAILED. Norm output 0 did not match. Hardware out = %40h   Expected out = %40h",responses[q][159:0] , expected_norm_output0[q]);
 	
 	if(responses[q][319:160] == expected_norm_output1[q])
 		$display("******* NORM OUTPUT CORE 1 TEST PASSED *********");
 	else
-		$display("FAILED. Norm output 1 did not match. Hardware out = %40h   Expected out = %40h", fullchip_instance.core_instance1.out, expected_norm_output1[q]);
+		$display("FAILED. Norm output 1 did not match. Hardware out = %40h   Expected out = %40h", responses[q][319:160], expected_norm_output1[q]);
 	end
      	#0.5 clk = 1'b1;
 	#0.5 clk = 1'b0;
@@ -828,10 +828,10 @@ end
 
 always@(posedge clk) begin
 	if(reset) begin
-		count <= 4'b0000;
+		count <= 3'b000;
 	end
 	else if(out_valid == 2'b11) begin
-		responses[count[3:0]] <= out;
+		responses[count] <= out;
 		count <= count + 1;
 	end	
 
