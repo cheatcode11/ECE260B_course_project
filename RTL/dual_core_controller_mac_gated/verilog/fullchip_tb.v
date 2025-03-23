@@ -433,17 +433,19 @@ $display("##### move ofifo to pmem #####");
     #0.5 clk = 1'b0;
 
      //$display("Hardware MAC output = %40h", out);
-	if(out[col*bw_psum-1:0] == core0_mac_expected_out[q]) begin
-	 	$display("******* Core 0 MAC OUTPUT TEST PASSED *********");
+	if(responses[q][159:0] == core0_mac_expected_nv[q]) begin
+	 	$display("******* Core 0 MAC OUTPUT Norm * Value TEST PASSED *********");
 	 end
 	 else
-	 	$display("FAILED Core 0 MAC output test. MAC Hardware out = %h Expected out = %40h", out[col*bw_psum-1:0], core0_mac_expected_out[q]);
+	 	$display("FAILED Core 0 MAC output test. MAC Hardware out = %h Expected out = %40h", responses[q][159:0], core0_mac_expected_nv[q]);
          
-	if(out[2*col*bw_psum-1:col*bw_psum] == core1_mac_expected_out[q]) begin
-	 	$display("******* Core 1 MAC OUTPUT TEST PASSED *********");
+	if(responses[q][319:160] == core1_mac_expected_nv[q]) begin
+	 	$display("******* Core 1 MAC OUTPUT Norm * Value TEST PASSED *********");
 	 end
 	 else
-	 	$display("FAILED Core 1 MAC output test. MAC Hardware out = %h Expected out = %40h", out[col*bw_psum-1:0], core1_mac_expected_out[q]);
+	 	$display("FAILED Core 1 MAC output test. MAC Hardware out = %h Expected out = %40h", responses[q][319:160], core1_mac_expected_nv[q]);
+
+
 
 	#0.5 clk = 1'b1;
 	  #0.5 clk = 1'b0;
@@ -469,12 +471,12 @@ for (q=0; q<total_cycle; q=q+1) begin
 	if(responses[q][159:0] == expected_norm_output0[q])
 		$display("******* NORM OUTPUT CORE 0 TEST PASSED *********");
 	else
-		$display("FAILED. Norm output 0 did not match. Hardware out = %40h   Expected out = %40h",fullchip_instance.core_instance0.out , expected_norm_output0[q]);
+		$display("FAILED. Norm output 0 did not match. Hardware out = %40h   Expected out = %40h",responses[q][159:0], expected_norm_output0[q]);
 	
 	if(responses[q][319:160] == expected_norm_output1[q])
 		$display("******* NORM OUTPUT CORE 1 TEST PASSED *********");
 	else
-		$display("FAILED. Norm output 1 did not match. Hardware out = %40h   Expected out = %40h", fullchip_instance.core_instance1.out, expected_norm_output1[q]);
+		$display("FAILED. Norm output 1 did not match. Hardware out = %40h   Expected out = %40h", responses[q][319:160], expected_norm_output1[q]);
 	end
      	#0.5 clk = 1'b1;
 	#0.5 clk = 1'b0;
